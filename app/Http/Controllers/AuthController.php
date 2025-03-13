@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('/auth/login');
     }
 
     public function login(Request $request)
@@ -23,7 +23,16 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+
+            if (Auth::user()->role === 'Admin') {
+                return redirect('/admin');
+            } elseif (Auth::user()->role === 'Student') {
+                return redirect('/student');
+            } elseif (Auth::user()->role === 'MO') {
+                return redirect('/mo');
+            } elseif (Auth::user()->role === 'Kaprodi') {
+                return redirect('/kaprodi');
+            }
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
@@ -31,7 +40,7 @@ class AuthController extends Controller
 
     public function showRegisterForm()
     {
-        return view('auth.register');
+        return view('/auth/register');
     }
 
     public function register(Request $request)
@@ -51,7 +60,6 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect('/');
     }
 
     public function logout(Request $request)
