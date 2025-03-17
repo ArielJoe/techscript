@@ -14,7 +14,7 @@ class Layout extends Component
      * @param string $title
      * @return void
      */
-    public function __construct($title = 'Default Title')
+    public function __construct($title = 'TechScript')
     {
         $this->title = $title;
     }
@@ -26,6 +26,6 @@ class Layout extends Component
      */
     public function render()
     {
-        return view('components.layout');
+        return view('/components/layout');
     }
 }
