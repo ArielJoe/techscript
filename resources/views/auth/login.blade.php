@@ -1,4 +1,16 @@
-<x-layout title="Login">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="icon" href="{{ asset('tslogo.png') }}">
+    @vite('resources/css/app.css')
+</head>
+
+<body>
     <section class="bg-gray-100">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
@@ -52,12 +64,15 @@
                             Login
                         </button>
                         {{-- <p class="text-sm font-light text-gray-500">
-                            Don't have an account yet? <a href="#"
-                                class="font-medium text-primary-600 hover:underline">Sign up</a>
-                        </p> --}}
+                                Don't have an account yet? <a href="#"
+                                    class="font-medium text-primary-600 hover:underline">Sign up</a>
+                            </p> --}}
                     </form>
                 </div>
             </div>
         </div>
     </section>
-</x-layout>
+
+</body>
+
+</html>

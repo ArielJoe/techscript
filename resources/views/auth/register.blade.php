@@ -1,4 +1,4 @@
-<x-layout title="Register">
+{{-- <x-layout title="Register">
     <h2>Register</h2>
 
     @if ($errors->any())
@@ -45,4 +45,4 @@
             Already have an account? <a href="{{ route('login') }}">Login</a>
         </p>
     </form>
-</x-layout>
+</x-layout> --}}

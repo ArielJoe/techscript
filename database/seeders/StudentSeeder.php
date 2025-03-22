@@ -13,13 +13,38 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'id' => '2001',
-            'email' => 'student@gmail.com',
-            'password' => Hash::make('123456'),
-            'role' => 'Student',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $students = [
+            [
+                'id' => '4001',
+                'email' => 'student1@gmail.com',
+                'password' => Hash::make('123456'),
+                'role' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'Major_id' => 1,
+            ],
+            [
+                'id' => '4002',
+                'email' => 'student2@gmail.com',
+                'password' => Hash::make('123456'),
+                'role' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'Major_id' => 2,
+            ],
+            [
+                'id' => '4003',
+                'email' => 'student3@gmail.com',
+                'password' => Hash::make('123456'),
+                'role' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'Major_id' => 3,
+            ],
+        ];
+
+        foreach ($students as $studentData) {
+            User::create($studentData);
+        }
     }
 }

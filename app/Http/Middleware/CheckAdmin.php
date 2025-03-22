@@ -12,7 +12,7 @@ class CheckAdmin
     {
         // Check if the user is authenticated
         if (!Auth::check()) {
-            return redirect('/login')->with('error', 'Please log in first.');
+            return redirect('/login')->withErrors(['unauthenticated' => 'Please login first']);
         }
 
         // Check if the authenticated user's role is 'Admin'

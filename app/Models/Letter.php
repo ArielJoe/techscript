@@ -2,36 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Letter extends Model
 {
-    protected $table = 'user';
+    protected $table = 'letter';
 
     protected $primaryKey = 'id';
 
-    public $incrementing = false;
-
     protected $keyType = 'string';
+
+    public $incrementing = false;
 
     public $timestamps = true;
 
     protected $fillable = [
         'id',
-        'email',
-        'password',
-        'role',
+        'category',
+        'purpose',
+        'topic',
+        'addressed_to',
+        'status',
+        'file_path',
         'updated_at',
         'created_at',
-        'Major_id',
-    ];
-
-    protected $hidden = [
-        'password',
     ];
 
     protected $casts = [
-        'role' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

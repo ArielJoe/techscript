@@ -1,0 +1,20 @@
+Role :
+- 1 = Admin
+- 2 = Kaprodi
+- 3 = MO
+- 4 = Mahasiswa
+
+Letter :
+- 1 = Ditolak
+- 2 = Diproses
+- 3 = Diterima
+
+Student :
+- 1 = Aktif
+- 2 = Cuti
+- 3 = Mengundurkan Diri
+
+Major :
+- 1 = Ilmu Komputer
+- 2 = Teknik Informatika
+- 3 = Sistem Informasi

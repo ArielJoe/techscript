@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }}</title>
+    <title>@yield('title')</title>
     <link rel="icon" href="{{ asset('tslogo.png') }}">
     @vite('resources/css/app.css')
 </head>
 
 <body>
+    @include('components.sidebar')
+    @include('components.navbar')
 
-    <main>
-        {{ $slot }} <!-- This is where the content will be injected -->
+    <main class="sm:ml-64 p-4">
+        @yield('content')
     </main>
 
 </body>

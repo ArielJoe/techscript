@@ -42,6 +42,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'admin' => \App\Http\Middleware\CheckAdmin::class,
-        'student' => \App\Http\Middleware\CheckStudent::class,
+        'student' => \App\Http\Middleware\CheckMahasiswa::class,
     ];
 }

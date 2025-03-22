@@ -1,11 +1,24 @@
-<x-layout title="404 - Page Not Found">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404 - Page Not Found</title>
+    <link rel="icon" href="{{ asset('tslogo.png') }}">
+    @vite('resources/css/app.css')
+</head>
+
+<body>
     <div class="flex items-center justify-center min-h-screen">
         <div class="text-center">
             <h1 class="text-6xl font-bold text-teal-cyan mb-4">404</h1>
             <p class="text-2xl text-teal-cyan mb-2">Oops! Page Not Found</p>
             <p class="text-teal-cyan mb-6">
                 Redirecting to your dashboard in
-                <span id="timer" class="font-semibold text-teal-cyan transition-all duration-300">5</span> seconds...
+                <span id="timer" class="font-semibold text-teal-cyan transition-all duration-300">5</span>
+                seconds...
             </p>
             <a href="{{ url('/') }}"
                 class="inline-block bg-teal-cyan hover:bg-teal-cyan/90 text-white px-6 py-3 rounded-lg transition">
@@ -44,4 +57,6 @@
         // Start the countdown when the page loads
         window.onload = startCountdown;
     </script>
-</x-layout>
+</body>
+
+</html>

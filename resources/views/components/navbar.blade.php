@@ -27,16 +27,13 @@
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                                    src="https://i.pinimg.com/1200x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"
                                     alt="user photo">
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm"
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
-                                <p class="text-sm text-gray-900" role="none">
-                                    {{ Auth::user()->name }}
-                                </p>
                                 <p class="text-sm font-medium text-gray-900 truncate" role="none">
                                     {{ Auth::user()->email }}
                                 </p>
@@ -56,26 +53,7 @@
             </div>
         </div>
     </nav>
-    <div class="p-4">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-            <h2 class="text-2xl font-bold mb-6">Welcome to Your Dashboard</h2>
-            <p class="text-gray-600">Hello, {{ Auth::guard('web')->user()->email }}!</p>
-            <p class="text-gray-600">Your role is: {{ Auth::guard('web')->user()->role }}</p>
 
-            <!-- Example Cards -->
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div class="flex items-center justify-center h-24 rounded-sm bg-[#001011]">
-
-                </div>
-                <div class="flex items-center justify-center h-24 rounded-sm bg-[#2FAAB1]">
-
-                </div>
-                <div class="flex items-center justify-center h-24 rounded-sm bg-[#BCE7E9]">
-
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Flowbite Scripts -->

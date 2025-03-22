@@ -17,9 +17,10 @@ class AdminSeeder extends Seeder
             'id' => '1001',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
-            'role' => 'Admin',
+            'role' => 1,
             'created_at' => now(),
             'updated_at' => now(),
+            'Major_id' => null,
         ]);
     }
 }

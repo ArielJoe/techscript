@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showLoginForm()
+    public function index()
     {
         return view('/auth/login');
     }
@@ -26,8 +26,8 @@ class AuthController extends Controller
 
             if (Auth::user()->role === 'Admin') {
                 return redirect('/admin');
-            } elseif (Auth::user()->role === 'Student') {
-                return redirect('/student');
+            } elseif (Auth::user()->role === 'Mahasiswa') {
+                return redirect('/mahasiswa');
             } elseif (Auth::user()->role === 'MO') {
                 return redirect('/mo');
             } elseif (Auth::user()->role === 'Kaprodi') {
