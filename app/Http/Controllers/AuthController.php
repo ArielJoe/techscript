@@ -24,14 +24,14 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'Admin') {
+            if (Auth::user()->role === 1) {
                 return redirect('/admin');
-            } elseif (Auth::user()->role === 'Mahasiswa') {
-                return redirect('/mahasiswa');
-            } elseif (Auth::user()->role === 'MO') {
-                return redirect('/mo');
-            } elseif (Auth::user()->role === 'Kaprodi') {
+            } elseif (Auth::user()->role === 2) {
                 return redirect('/kaprodi');
+            } elseif (Auth::user()->role === 3) {
+                return redirect('/mo');
+            } elseif (Auth::user()->role === 4) {
+                return redirect('/mahasiswa');
             }
         }
 
@@ -49,7 +49,7 @@ class AuthController extends Controller
             'id' => ['required', 'string', 'max:10', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'max:20'],
+            'role' => ['required', 'integer'],
         ]);
 
         $user = User::create([
