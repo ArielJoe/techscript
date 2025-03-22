@@ -7,7 +7,7 @@ use App\Http\Middleware\CheckMO;
 use App\Http\Middleware\CheckMahasiswa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\LetterController;
+use App\Http\Controllers\LetterMahasiswaController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -29,7 +29,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         return view('/mahasiswa/index');
     })->name('index');
 
-    Route::resource('/submission', LetterController::class);
+    Route::resource('/submission', LetterMahasiswaController::class);
     // Route::get('/submission', [LetterController::class, 'index'])->name('submission.index');
 
     Route::prefix('letter')->name('letter.')->group(function () {

@@ -17,8 +17,8 @@ class CheckMO
         }
 
         // Check if the authenticated user's role is 'MO'
-        if (Auth::user()->role !== 'MO') {
-            return redirect(strtolower(Auth::user()->role)); // ->with('error', 'You are not authorized to access this page.');
+        if (Auth::user()->role !== 3) {
+            return redirect(Auth::user()->role); // ->with('error', 'You are not authorized to access this page.');
         }
 
         // If the user is an MO, proceed with the request
