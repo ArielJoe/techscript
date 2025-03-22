@@ -21,7 +21,7 @@ class StudentSeeder extends Seeder
                 'role' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 1,
+                'Major_id' => 'FTRC-001',
             ],
             [
                 'id' => '4002',
@@ -30,7 +30,7 @@ class StudentSeeder extends Seeder
                 'role' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 2,
+                'Major_id' => 'FTRC-002',
             ],
             [
                 'id' => '4003',
@@ -39,7 +39,7 @@ class StudentSeeder extends Seeder
                 'role' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 3,
+                'Major_id' => 'FTRC-003',
             ],
         ];
 

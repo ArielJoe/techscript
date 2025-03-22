@@ -15,12 +15,11 @@ class Course extends Model
 
     public $incrementing = false;
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'id',
         'name',
-        'category',
         'sks',
         'period',
         'Major_id',

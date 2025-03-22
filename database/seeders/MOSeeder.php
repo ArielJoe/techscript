@@ -21,7 +21,7 @@ class MOSeeder extends Seeder
                 'role' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 1,
+                'Major_id' => 'FTRC-001',
             ],
             [
                 'id' => '3002',
@@ -30,7 +30,7 @@ class MOSeeder extends Seeder
                 'role' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 1,
+                'Major_id' => 'FTRC-001',
             ],
             [
                 'id' => '3003',
@@ -39,7 +39,7 @@ class MOSeeder extends Seeder
                 'role' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 2,
+                'Major_id' => 'FTRC-002',
             ],
             [
                 'id' => '3004',
@@ -48,7 +48,7 @@ class MOSeeder extends Seeder
                 'role' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 2,
+                'Major_id' => 'FTRC-002',
             ],
             [
                 'id' => '3005',
@@ -57,7 +57,7 @@ class MOSeeder extends Seeder
                 'role' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 3,
+                'Major_id' => 'FTRC-003',
             ],
             [
                 'id' => '3006',
@@ -66,7 +66,7 @@ class MOSeeder extends Seeder
                 'role' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'Major_id' => 3,
+                'Major_id' => 'FTRC-003',
             ],
         ];
 
