@@ -60,7 +60,7 @@
                                 password?</a>
                         </div>
                         <button type="submit"
-                            class="w-full text-white bg-[#2FAAB1] hover:bg-[#2FAAB1]/90 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-[#2FAAB1] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            class="w-full text-white bg-teal-cyan hover:bg-teal-cyan/90 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-[#2FAAB1] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Login
                         </button>
                         {{-- <p class="text-sm font-light text-gray-500">

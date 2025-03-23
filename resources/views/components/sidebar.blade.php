@@ -37,16 +37,16 @@
                     'icon' => 'solar-letter-bold',
                     'route' => null,
                     'activeRoutes' => [
-                        'mahasiswa.letter.skma',
-                        'mahasiswa.letter.sptmk',
-                        'mahasiswa.letter.skl',
-                        'mahasiswa.letter.lhs',
+                        'mahasiswa.skma.index',
+                        'mahasiswa.sptmk.index',
+                        'mahasiswa.skl.index',
+                        'mahasiswa.lhs.index',
                     ],
                     'children' => [
-                        ['label' => 'SKMA', 'route' => 'mahasiswa.letter.skma'],
-                        ['label' => 'SPTMK', 'route' => 'mahasiswa.letter.sptmk'],
-                        ['label' => 'SKL', 'route' => 'mahasiswa.letter.skl'],
-                        ['label' => 'LHS', 'route' => 'mahasiswa.letter.lhs'],
+                        ['label' => 'SKMA', 'route' => 'mahasiswa.skma.index'],
+                        ['label' => 'SPTMK', 'route' => 'mahasiswa.sptmk.index'],
+                        ['label' => 'SKL', 'route' => 'mahasiswa.skl.index'],
+                        ['label' => 'LHS', 'route' => 'mahasiswa.lhs.index'],
                     ],
                 ],
             ];
@@ -58,7 +58,7 @@
                     <li>
                         <a href="{{ $item['route'] ? route($item['route']) : '#' }}"
                             class="flex items-center p-2 rounded-lg transition-colors duration-200 text-white cursor-pointer
-                                  {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}">
+                                {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}">
                             @if ($item['icon'] === 'ri-dashboard-fill')
                                 <x-ri-dashboard-fill class="w-6 h-6 text-white" />
                             @elseif ($item['icon'] === 'solar-letter-opened-bold')
@@ -73,7 +73,7 @@
                     <li>
                         <button type="button"
                             class="flex items-center p-2 w-full rounded-lg transition-colors duration-200 text-white cursor-pointer
-                                       {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}"
+                                    {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}"
                             aria-controls="dropdown-{{ Str::slug($item['label']) }}"
                             data-collapse-toggle="dropdown-{{ Str::slug($item['label']) }}">
                             @if ($item['icon'] === 'solar-letter-bold')
@@ -94,7 +94,7 @@
                                 <li>
                                     <a href="{{ route($child['route']) }}"
                                         class="flex items-center p-2 pl-11 w-full rounded-lg transition-colors duration-200 text-white cursor-pointer
-                                              {{ request()->routeIs($child['route']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}">
+                                            {{ request()->routeIs($child['route']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}">
                                         <span class="text-md">{{ $child['label'] }}</span>
                                     </a>
                                 </li>
