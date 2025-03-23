@@ -7,7 +7,8 @@
 @section('content')
     <div class="lg:flex lg:items-center lg:justify-between md:mx-2">
         <div class="min-w-0 flex-1">
-            <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">Surat Keterangan Mahasiswa Aktif (SKMA)</h2>
+            <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">Surat Keterangan
+                Mahasiswa Aktif (SKMA)</h2>
             <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                     <svg class="mr-1.5 size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
@@ -106,15 +107,15 @@
                 </button>
 
                 <!--
-              Dropdown menu, show/hide based on menu state.
-      
-              Entering: "transition ease-out duration-200"
-                From: "transform opacity-0 scale-95"
-                To: "transform opacity-100 scale-100"
-              Leaving: "transition ease-in duration-75"
-                From: "transform opacity-100 scale-100"
-                To: "transform opacity-0 scale-95"
-            -->
+                  Dropdown menu, show/hide based on menu state.
+          
+                  Entering: "transition ease-out duration-200"
+                    From: "transform opacity-0 scale-95"
+                    To: "transform opacity-100 scale-100"
+                  Leaving: "transition ease-in duration-75"
+                    From: "transform opacity-100 scale-100"
+                    To: "transform opacity-0 scale-95"
+                -->
                 <div class="absolute right-0 z-10 mt-2 -mr-1 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 focus:outline-hidden"
                     role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" -->
@@ -179,7 +180,8 @@
                                     </li>
                                 </ul>
                                 <div class="py-1">
-                                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Delete
+                                    <a href="#"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Delete
                                         all</a>
                                 </div>
                             </div>

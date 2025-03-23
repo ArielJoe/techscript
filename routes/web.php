@@ -12,10 +12,11 @@ use App\Http\Controllers\LetterSkmaMahasiswaController;
 use App\Http\Controllers\LetterSptmkMahasiswaController;
 use App\Http\Controllers\LetterLhsMahasiswaController;
 use App\Http\Controllers\LetterSklMahasiswaController;
+use App\Enums\RoleEnum;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect(strtolower(Auth::user()->role));
+        return redirect(RoleEnum::from(Auth::user()->role)->label());
     }
     return view('/auth/login');
 });
@@ -28,7 +29,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(CheckMahasiswa::class)->group(function () {
     Route::get('/', function () {
         return view('/mahasiswa/index');
     })->name('index');
@@ -47,7 +48,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
 
     // Route for Controller SKMA Mahasiswa
     Route::resource('/skl', LetterSklMahasiswaController::class);
-})->middleware(CheckMahasiswa::class);
+});
 
 Route::get('/admin', function () {
     return view('/admin/index');

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\RoleEnum;
 
 class CheckKaprodi
 {
@@ -18,7 +19,7 @@ class CheckKaprodi
 
         // Check if the authenticated user's role is 'Kaprodi'
         if (Auth::user()->role !== 2) {
-            return redirect(Auth::user()->role); // ->with('error', 'You are not authorized to access this page.');
+            return redirect(RoleEnum::from(Auth::user()->role)->label()); // ->with('error', 'You are not authorized to access this page.');
         }
 
         // If the user is an Kaprodi, proceed with the request

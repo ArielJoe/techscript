@@ -1,7 +1,7 @@
 @extends('components.layout')
 
 @section('title')
-    Kaprodi
+    Admin
 @endsection
 
 @section('content')

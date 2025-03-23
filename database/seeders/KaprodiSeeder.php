@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Kaprodi;
 use Illuminate\Support\Facades\Hash;
 
 class KaprodiSeeder extends Seeder
@@ -43,8 +44,30 @@ class KaprodiSeeder extends Seeder
             ],
         ];
 
+        $kaprodis = [
+            [
+                'id' => 'KP2001',
+                'full_name' => 'Dr. Robert Smith',
+                'user_id' => '2001',
+            ],
+            [
+                'id' => 'KP2002',
+                'full_name' => 'Prof. Linda Johnson',
+                'user_id' => '2002',
+            ],
+            [
+                'id' => 'KP2003',
+                'full_name' => 'Dr. Mark Taylor',
+                'user_id' => '2003',
+            ],
+        ];
+
         foreach ($users as $userData) {
             User::create($userData);
+        }
+
+        foreach ($kaprodis as $kaprodiData) {
+            Kaprodi::create($kaprodiData);
         }
     }
 }

@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    SPTMK terupdate asdf
+    SPTMK terupdate
 @endsection

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\MO;
 use Illuminate\Support\Facades\Hash;
 
 class MOSeeder extends Seeder
@@ -70,8 +71,45 @@ class MOSeeder extends Seeder
             ],
         ];
 
+        $mos = [
+            [
+                'id' => 'MO3001',
+                'full_name' => 'Michael Brown',
+                'user_id' => '3001',
+            ],
+            [
+                'id' => 'MO3002',
+                'full_name' => 'Sarah Davis',
+                'user_id' => '3002',
+            ],
+            [
+                'id' => 'MO3003',
+                'full_name' => 'David Wilson',
+                'user_id' => '3003',
+            ],
+            [
+                'id' => 'MO3004',
+                'full_name' => 'Emily Clark',
+                'user_id' => '3004',
+            ],
+            [
+                'id' => 'MO3005',
+                'full_name' => 'James Lewis',
+                'user_id' => '3005',
+            ],
+            [
+                'id' => 'MO3006',
+                'full_name' => 'Laura Harris',
+                'user_id' => '3006',
+            ],
+        ];
+
         foreach ($users as $userData) {
             User::create($userData);
+        }
+
+        foreach ($mos as $moData) {
+            MO::create($moData);
         }
     }
 }
