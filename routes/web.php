@@ -8,6 +8,10 @@ use App\Http\Middleware\CheckMahasiswa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LetterMahasiswaController;
+use App\Http\Controllers\LetterSkmaMahasiswaController;
+use App\Http\Controllers\LetterSptmkMahasiswaController;
+use App\Http\Controllers\LetterLhsMahasiswaController;
+use App\Http\Controllers\LetterSklMahasiswaController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -32,20 +36,17 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     Route::resource('/submission', LetterMahasiswaController::class);
     // Route::get('/submission', [LetterController::class, 'index'])->name('submission.index');
 
-    Route::prefix('letter')->name('letter.')->group(function () {
-        Route::get('/skma', function () {
-            return view('mahasiswa.letter.skma');
-        })->name('skma');
-        Route::get('/sptmk', function () {
-            return view('mahasiswa.letter.sptmk');
-        })->name('sptmk');
-        Route::get('/skl', function () {
-            return view('mahasiswa.letter.skl');
-        })->name('skl');
-        Route::get('/lhs', function () {
-            return view('mahasiswa.letter.lhs');
-        })->name('lhs');
-    });
+    // Route for Controller SKMA Mahasiswa
+    Route::resource('/skma', LetterSkmaMahasiswaController::class);
+
+    // Route for Controller SPTMK Mahasiswa
+    Route::resource('/sptmk', LetterSptmkMahasiswaController::class);
+
+    // Route for Controller LHS Mahasiswa
+    Route::resource('/lhs', LetterLhsMahasiswaController::class);
+
+    // Route for Controller SKMA Mahasiswa
+    Route::resource('/skl', LetterSklMahasiswaController::class);
 })->middleware(CheckMahasiswa::class);
 
 Route::get('/admin', function () {
