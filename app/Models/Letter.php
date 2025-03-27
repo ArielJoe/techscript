@@ -26,6 +26,10 @@ class Letter extends Model
         'file_path',
         'updated_at',
         'created_at',
+        'Student_id',
+        'Kaprodi_id',
+        'MO_id',
+        'Major_id',
     ];
 
     protected $casts = [

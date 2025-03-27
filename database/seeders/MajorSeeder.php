@@ -23,7 +23,7 @@ class MajorSeeder extends Seeder
             ],
             [
                 'id' => 'FTRC-003',
-                'name' => 'Sistem Komputer',
+                'name' => 'Sistem Informasi',
             ],
         ];
 

@@ -5,58 +5,60 @@
 @endsection
 
 @section('content')
-    <section class="bg-gray-300">
-        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-            <h2 class="mb-4 text-xl font-bold text-gray-900">Add a new product (SKMA terupdate ygy)</h2>
-            <form action="#">
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <div class="sm:col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Product
-                            Name</label>
-                        <input type="text" name="name" id="name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Type product name" required="">
+    <section>
+        <div class="py-4 px-4 mx-auto max-w-2xl lg:py-4">
+            <h1 class="mb-4 text-2xl font-bold text-gray-900">Surat Keterangan Mahasiswa Aktif</h1>
+            <form action="{{ route('mahasiswa.skma.store') }}" method="POST">
+                @csrf
+                <div class="flex flex-col gap-4">
+                    <div class="flex gap-2 w-full flex-col sm:flex-row">
+                        <div class="w-full sm:w-[20%]">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">NRP</label>
+                            <input type="text"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                value="{{ $students[0]->student_id }}" disabled>
+                            <input type="hidden" name="id" value="{{ $students[0]->student_id }}">
+                        </div>
+                        <div class="w-full sm:w-[80%]">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Nama Lengkap</label>
+                            <input type="text"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                value="{{ $students[0]->full_name }}" disabled>
+                        </div>
                     </div>
-                    <div class="w-full">
-                        <label for="brand" class="block mb-2 text-sm font-medium text-gray-900">Brand</label>
-                        <input type="text" name="brand" id="brand"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Product brand" required="">
-                    </div>
-                    <div class="w-full">
-                        <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Price</label>
-                        <input type="number" name="price" id="price"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="$2999" required="">
+                    <div class="flex gap-2 w-full flex-col sm:flex-row">
+                        <div class="w-full sm:w-[20%]">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Semester</label>
+                            <input type="text"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                value="{{ $students[0]->semester }}" disabled>
+                        </div>
+                        <div class="w-full sm:w-[80%]">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Program Studi</label>
+                            <input type="text"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                value="{{ $students[0]->program_studi }}" disabled>
+                        </div>
                     </div>
                     <div>
-                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900">Category</label>
-                        <select id="category"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                            <option selected="">Select category</option>
-                            <option value="TV">TV/Monitors</option>
-                            <option value="PC">PC</option>
-                            <option value="GA">Gaming/Console</option>
-                            <option value="PH">Phones</option>
-                        </select>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Alamat</label>
+                        <textarea
+                            class="bg-gray-50 border min-h-15 max-h-25 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="" disabled>{{ $students[0]->address }}</textarea>
                     </div>
                     <div>
-                        <label for="item-weight" class="block mb-2 text-sm font-medium text-gray-900">Item
-                            Weight (kg)</label>
-                        <input type="number" name="item-weight" id="item-weight"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="12" required="">
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Description</label>
-                        <textarea id="description" rows="8"
-                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
-                            placeholder="Your description here"></textarea>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Keperluan Pengajuan</label>
+                        <textarea name="purpose"
+                            class="bg-gray-50 border min-h-15 max-h-25 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 @error('purpose') border-red-500 @enderror"
+                            placeholder=""></textarea>
+                        @error('purpose')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <button type="submit"
-                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-teal-cyan rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
-                    Add product
+                    class="cursor-pointer inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-teal-cyan rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800">
+                    Ajukan Surat
                 </button>
             </form>
         </div>

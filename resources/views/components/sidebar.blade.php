@@ -1,10 +1,13 @@
+@php
+    use App\Enums\RoleEnum;
+@endphp
+
 <div id="logo-sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full bg-deep-teal sm:translate-x-0"
     aria-label="Sidebar">
     <div class="h-full px-3 py-3 overflow-y-auto">
         <!-- Sidebar Toggle Buttons -->
         <div class="flex justify-between items-center">
-            <!-- PC Close Button -->
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                 type="button"
                 class="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden hover:bg-teal-cyan focus:outline-none focus:ring-2 focus:ring-light-cyan cursor-pointer">
@@ -26,13 +29,11 @@
                     'route' => 'mahasiswa.index',
                     'activeRoutes' => ['mahasiswa.index'],
                 ],
-                [
-                    'label' => 'Submission',
-                    'icon' => 'solar-letter-opened-bold',
-                    'route' => 'mahasiswa.submission.index',
-                    'activeRoutes' => ['mahasiswa.submission.index'],
-                ],
-                [
+            ];
+
+            // Only add Letter item if user is authenticated and has mahasiswa role
+            if (RoleEnum::from(Auth::user()->role)->label() === 'mahasiswa') {
+                $navItems[] = [
                     'label' => 'Letter',
                     'icon' => 'solar-letter-bold',
                     'route' => null,
@@ -48,8 +49,8 @@
                         ['label' => 'SKL', 'route' => 'mahasiswa.skl.index'],
                         ['label' => 'LHS', 'route' => 'mahasiswa.lhs.index'],
                     ],
-                ],
-            ];
+                ];
+            }
         @endphp
 
         <ul class="space-y-2 font-medium">
@@ -63,8 +64,6 @@
                                 <x-ri-dashboard-fill class="w-6 h-6 text-white" />
                             @elseif ($item['icon'] === 'solar-letter-opened-bold')
                                 <x-solar-letter-opened-bold class="w-6 h-6 text-white" />
-                            @elseif ($item['icon'] === 'solar-letter-bold')
-                                <x-solar-letter-bold class="w-6 h-6 text-white" />
                             @endif
                             <span class="ms-3 text-md">{{ $item['label'] }}</span>
                         </a>
@@ -107,20 +106,18 @@
     </div>
 </div>
 
+<!-- Keep your existing JavaScript -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Serialize PHP $navItems array to JavaScript
         const navItems = @json($navItems);
-
-        // Handle dropdown toggle with chevron animation
         const dropdownButtons = document.querySelectorAll('[data-collapse-toggle]');
+
         dropdownButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const dropdownId = this.getAttribute('data-collapse-toggle');
                 const dropdown = document.getElementById(dropdownId);
                 const chevron = this.querySelector('[data-chevron]');
 
-                // Toggle dropdown visibility and chevron rotation
                 if (dropdown.classList.contains('hidden')) {
                     dropdown.classList.remove('hidden');
                     chevron.classList.add('rotate-180');
@@ -131,7 +128,6 @@
             });
         });
 
-        // Set initial state based on active route
         const activeRoute = '{{ request()->route()->getName() }}';
         navItems.forEach(item => {
             if (item.children && item.activeRoutes.includes(activeRoute)) {

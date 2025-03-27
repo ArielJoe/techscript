@@ -18,6 +18,17 @@ class Student extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'id',
+        'full_name',
+        'address',
+        'phone_number',
+        'graduation_date',
+        'enrollment_date',
+        'status',
+        'User_id'
+    ];
+
     public function letters(): HasMany
     {
         return $this->hasMany(Letter::class, 'Student_id');

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Enrollment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KaprodiSeeder::class);
         $this->call(MOSeeder::class);
         $this->call(StudentSeeder::class);
+        $this->call(EnrollmentSeeder::class);
     }
 }

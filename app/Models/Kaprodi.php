@@ -19,7 +19,8 @@ class Kaprodi extends Model
 
     protected $fillable = [
         'id',
-        'full_name'
+        'full_name',
+        'User_id'
     ];
 
     public function letters(): HasMany

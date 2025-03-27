@@ -34,6 +34,56 @@ class CourseSeeder extends Seeder
                 'period' => 'GANJIL24/25',
                 'Major_id' => 'FTRC-003',
             ],
+            [
+                'id' => 'IN104',
+                'name' => 'Database Systems',
+                'sks' => 3,
+                'period' => 'GANJIL24/25',
+                'Major_id' => 'FTRC-001',
+            ],
+            [
+                'id' => 'IN105',
+                'name' => 'Computer Networks',
+                'sks' => 3,
+                'period' => 'GANJIL24/25',
+                'Major_id' => 'FTRC-002',
+            ],
+
+            [
+                'id' => 'IN201',
+                'name' => 'Machine Learning',
+                'sks' => 4,
+                'period' => 'GENAP24/25',
+                'Major_id' => 'FTRC-001',
+            ],
+            [
+                'id' => 'IN202',
+                'name' => 'Object Oriented Programming',
+                'sks' => 4,
+                'period' => 'GENAP24/25',
+                'Major_id' => 'FTRC-002',
+            ],
+            [
+                'id' => 'IN203',
+                'name' => 'Mobile Development',
+                'sks' => 3,
+                'period' => 'GENAP24/25',
+                'Major_id' => 'FTRC-003',
+            ],
+            [
+                'id' => 'IN204',
+                'name' => 'Software Engineering',
+                'sks' => 3,
+                'period' => 'GENAP24/25',
+                'Major_id' => 'FTRC-001',
+            ],
+            [
+                'id' => 'IN205',
+                'name' => 'Cybersecurity Basics',
+                'sks' => 3,
+                'period' => 'GENAP24/25',
+                'Major_id' => 'FTRC-002',
+            ],
         ];
 
         foreach ($courses as $courseData) {
