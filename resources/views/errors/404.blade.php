@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>404 - Page Not Found</title>
     <link rel="icon" href="{{ asset('tslogo.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     @vite('resources/css/app.css')
 </head>
 
@@ -27,6 +28,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script>
         let countdown = 5; // 5 seconds countdown
         function startCountdown() {
