@@ -5,13 +5,12 @@
 @endsection
 
 @section('content')
-    <div class="lg:flex lg:items-center lg:justify-between md:mx-4 mb-8">
+    <div class="lg:flex lg:items-center lg:justify-between mb-8 mx-3 md:mx-4 mt-2">
         <div class="min-w-0 flex-1">
             <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">Surat Keterangan
                 Mahasiswa Aktif (SKMA)</h2>
         </div>
         <div class="mt-5 flex lg:mt-0 lg:ml-4">
-
             <span class="sm:ml-3">
                 <a href="{{ route('mahasiswa.skma.create') }}">
                     <button type="button"
@@ -26,7 +25,7 @@
     </div>
 
     <section class="p-3 sm:p-5">
-        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
@@ -136,28 +135,33 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500">
+                    <table class="w-full text-sm text-left text-gray-600">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-4 py-3">No Surat</th>
-                                <th scope="col" class="px-4 py-3">Judul Surat</th>
-                                <th scope="col" class="px-4 py-3">Jenis</th>
+                                <th scope="col" class="px-4 py-3">No.</th>
+                                <th scope="col" class="px-4 py-3">Nomor Surat</th>
+                                <th scope="col" class="px-4 py-3">Jenis Surat</th>
+                                <th scope="col" class="px-4 py-3">Tanggal diajukan</th>
                                 <th scope="col" class="px-4 py-3">Status</th>
-                                <th scope="col" class="px-4 py-3">Link Download</th>
-                                <th scope="col" class="px-4 py-3">
-                                    <span class="sr-only">Actions</span>
-                                </th>
+                                <th scope="col" class="px-4 py-3">Berkas (download)</th>
+                                <th scope="col" class="px-4 py-3">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($letters as $letter)
                             <tr class="border-b border-gray-200">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">Apple
-                                    iMac 27"</th>
-                                <td class="px-4 py-3">PC</td>
-                                <td class="px-4 py-3">Apple</td>
-                                <td class="px-4 py-3">300</td>
-                                <td class="px-4 py-3">$2999</td>
-                                <td class="px-4 py-3 flex items-center justify-end">
+                                {{-- <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">Apple
+                                    iMac 27"</th> --}}
+                                <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-3">{{ $letter->id }}</td>
+                                <td class="px-4 py-3">{{ $letter->category }}</td>
+                                <td class="px-4 py-3">{{ $letter->tanggal }}</td>
+                                <td class="px-4 py-3">{{ $letter->status_text }}</td>
+                                <td class="px-4 py-3"><i>{{ $letter->file_path }}</i></td>
+                                <td class="px-4 py-3">
+                                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button" class="cursor-pointer block    px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300">Lihat detail</button>
+                                </td>
+                                {{-- <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="apple-imac-27-dropdown-button"
                                         data-dropdown-toggle="apple-imac-27-dropdown"
                                         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -184,8 +188,9 @@
                                                 class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Delete</a>
                                         </div>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

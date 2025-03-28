@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Exception;
+use Carbon\Carbon;
 
 class LetterSkmaMahasiswaController extends Controller
 {
@@ -17,8 +18,19 @@ class LetterSkmaMahasiswaController extends Controller
      */
     public function index(Request $request)
     {
+        $letters = Letter::where('Student_id', 'STU' . Auth::id())->latest()->get();
 
-        return view('/mahasiswa/skma/index');
+        foreach ($letters as $letter) {
+            $letter->tanggal = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
+            $letter->status_text = match ($letter->status) {
+                1 => 'Ditolak',
+                2 => 'Diproses',
+                3 => 'Diterima'
+            };
+            $letter->file_path = $letter->file_path ?? 'Sedang diproses';
+        }
+
+        return view('/mahasiswa/skma/index')->with('letters', $letters);
     }
 
 
@@ -87,7 +99,7 @@ class LetterSkmaMahasiswaController extends Controller
 
         function generateLetterNumber()
         {
-            $letterCategory = 'LHS';
+            $letterCategory = 'SKMA';
             $userId = Auth::id();
 
             $currentYear = Date('Y');
@@ -127,7 +139,7 @@ class LetterSkmaMahasiswaController extends Controller
         $majorId = $user->Major_id;
         Letter::create([
             'id'       => generateLetterNumber(),
-            'category' => 'LHS',
+            'category' => 'SKMA',
             'status'   => 2,
             'Student_id' => 'STU' . Auth::id(),
             'Major_id' => $majorId,
@@ -138,14 +150,16 @@ class LetterSkmaMahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request) {}
+    public function show(Request $request) {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Letter $letter)
     {
-        //
+        // Not used
     }
 
     /**
@@ -153,7 +167,7 @@ class LetterSkmaMahasiswaController extends Controller
      */
     public function update(Request $request, Letter $letter)
     {
-        //
+        // Not used
     }
 
     /**
@@ -161,6 +175,6 @@ class LetterSkmaMahasiswaController extends Controller
      */
     public function destroy(Letter $letter)
     {
-        //
+        // Not used
     }
 }
