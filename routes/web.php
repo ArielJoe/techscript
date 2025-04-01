@@ -7,7 +7,7 @@ use App\Http\Middleware\CheckMO;
 use App\Http\Middleware\CheckMahasiswa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\LetterMahasiswaController;
+use App\Http\Controllers\DashboardMahasiswaController;
 use App\Http\Controllers\LetterSkmaMahasiswaController;
 use App\Http\Controllers\LetterSptmkMahasiswaController;
 use App\Http\Controllers\LetterLhsMahasiswaController;
@@ -33,9 +33,6 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(CheckMahasiswa::class
     Route::get('/', function () {
         return view('/mahasiswa/index');
     })->name('index');
-
-    Route::resource('/submission', LetterMahasiswaController::class);
-    // Route::get('/submission', [LetterController::class, 'index'])->name('submission.index');
 
     // Route for Controller SKMA Mahasiswa
     Route::resource('/skma', LetterSkmaMahasiswaController::class);

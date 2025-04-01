@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Letter;
 use Illuminate\Http\Request;
 
-class LetterMahasiswaController extends Controller
+class DashboardMahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('/mahasiswa/submission/index');
+        return view('/mahasiswa/index');
     }
 
     /**

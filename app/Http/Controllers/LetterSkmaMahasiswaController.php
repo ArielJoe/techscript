@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Letter;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -18,16 +19,28 @@ class LetterSkmaMahasiswaController extends Controller
      */
     public function index(Request $request)
     {
-        $letters = Letter::where('Student_id', 'STU' . Auth::id())->latest()->get();
+        $search = $request->search;
+
+        $letters = Letter::where('Student_id', 'STU' . Auth::id())
+            ->where('category', 'SKMA')
+            ->when($search, function ($query, $search) {
+                return $query->where('id', 'like', "%{$search}%");
+            })
+            ->latest()->paginate(10);
+        $student = Student::where('User_id', Auth::id())->first();
 
         foreach ($letters as $letter) {
-            $letter->tanggal = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
+            $letter->date_indo = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
                 3 => 'Diterima'
             };
-            $letter->file_path = $letter->file_path ?? 'Sedang diproses';
+            $letter->file_path = $letter->file_path;
+            // Get student data
+            $letter->full_name = $student->full_name;
+            $letter->nrp = $student->id;
+            $letter->address = $student->address;
         }
 
         return view('/mahasiswa/skma/index')->with('letters', $letters);
@@ -94,7 +107,7 @@ class LetterSkmaMahasiswaController extends Controller
     {
         // validate form
         $request->validate([
-            'purpose'   => 'required|max:100'
+            'purpose'   => 'required|string|max:100'
         ]);
 
         function generateLetterNumber()
@@ -140,18 +153,31 @@ class LetterSkmaMahasiswaController extends Controller
         Letter::create([
             'id'       => generateLetterNumber(),
             'category' => 'SKMA',
+            'purpose' => $request->purpose,
             'status'   => 2,
             'Student_id' => 'STU' . Auth::id(),
             'Major_id' => $majorId,
         ]);
-        return redirect()->route('mahasiswa.skma.index');
+        return redirect()->route('mahasiswa.skma.index')->with(['success' => 'SKMA telah diajukan!']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request) {
-        //
+    public function show(Request $request)
+    {
+        $letters = Letter::where('Student_id', 'STU' . Auth::id())
+                        ->where('category', 'SKMA')->latest()->get();
+        foreach ($letters as $letter) {
+            $letter->date_indo = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
+            $letter->status_text = match ($letter->status) {
+                1 => 'Ditolak',
+                2 => 'Diproses',
+                3 => 'Diterima'
+            };
+        }
+
+        return view('/mahasiswa/skma/show')->with('letters', $letters);
     }
 
     /**

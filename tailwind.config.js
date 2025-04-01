@@ -55,4 +55,5 @@ tailwind.config = {
             ],
         },
     },
+    plugins: [require("flowbite/plugin")],
 };
