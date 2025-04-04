@@ -8,6 +8,7 @@
     <section>
         <div class="py-4 px-4 mx-auto max-w-2xl lg:py-4">
             <h1 class="mb-6 text-2xl text-center font-bold text-gray-900">Surat Keterangan Lulus</h1>
+
             <form action="{{ route('mahasiswa.skl.store') }}" method="POST">
                 @csrf
                 <div class="flex flex-col gap-4">
@@ -50,7 +51,7 @@
                                 </svg>
                             </div>
                             <input id="datepicker" type="text" name="graduation_date"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                                class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-teal-cyan focus:border-teal-cyan block w-full ps-10 p-2.5"
                                 placeholder="Pilih tanggal..">
                             @error('graduation_date')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

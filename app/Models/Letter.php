@@ -22,6 +22,8 @@ class Letter extends Model
         'purpose',
         'topic',
         'addressed_to',
+        'list_description',
+        'selected_course',
         'status',
         'file_path',
         'updated_at',

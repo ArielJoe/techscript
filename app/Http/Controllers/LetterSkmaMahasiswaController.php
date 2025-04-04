@@ -96,7 +96,7 @@ class LetterSkmaMahasiswaController extends Controller
             }
             return $student;
         }, $students);
-        // dd($students);
+        
         return view('/mahasiswa/skma/create')->with('students', $students);
     }
 
