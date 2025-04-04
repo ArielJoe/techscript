@@ -7,8 +7,7 @@
 @section('content')
     <div class="lg:flex lg:items-center lg:justify-between mb-8 mx-3 md:mx-4 mt-2">
         <div class="min-w-0 flex-1">
-            <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">Surat Keterangan
-                Mahasiswa Aktif (SKMA)</h2>
+            <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">Surat Keterangan Mahasiswa Aktif (SKMA)</h2>
         </div>
         <div class="mt-5 flex lg:mt-0 lg:ml-4">
             <span class="sm:ml-3">
@@ -24,25 +23,51 @@
         </div>
     </div>
 
+    @if ($letters->isEmpty())
+        <div class="flex items-center mx-3 md:mx-4.5 p-4 mb-4 text-sm text-deep-teal border border-teal-cyan/40 rounded-lg bg-light-cyan/20"
+            role="alert">
+            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+                <span class="font-medium">Data tidak tersedia!</span>
+            </div>
+        </div>
+    @endif
     <section class="p-3 sm:p-5">
         <div class="mx-auto max-w-screen-xl">
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                    <div class="w-full md:w-1/2">
-                        <form class="flex items-center">
+                    <div class="w-full md:w-64">
+                        <form method="GET" action="{{ route('mahasiswa.skma.index') }}" class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <button type="submit"
+                                    class="cursor-pointer absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-auto">
                                     <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
                                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                </div>
-                                <input type="text" id="simple-search"
+                                </button>
+                                <input type="text" name="search" value="{{ request('search') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
-                                    placeholder="Search" required="">
+                                    placeholder="Cari nomor surat..">
+                                @if (request('search'))
+                                    <a href="{{ route('mahasiswa.skma.index') }}"
+                                        class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <svg class="w-6 h-6 text-gray-600 rotate-45" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                                            viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M5 12h14m-7 7V5" />
+                                        </svg>
+                                    </a>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -149,19 +174,30 @@
                         </thead>
                         <tbody>
                             @foreach ($letters as $letter)
-                            <tr class="border-b border-gray-200">
-                                {{-- <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">Apple
+                                <tr class="border-b border-gray-200">
+                                    {{-- <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">Apple
                                     iMac 27"</th> --}}
-                                <td class="px-4 py-3">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-3">{{ $letter->id }}</td>
-                                <td class="px-4 py-3">{{ $letter->category }}</td>
-                                <td class="px-4 py-3">{{ $letter->tanggal }}</td>
-                                <td class="px-4 py-3">{{ $letter->status_text }}</td>
-                                <td class="px-4 py-3"><i>{{ $letter->file_path }}</i></td>
-                                <td class="px-4 py-3">
-                                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button" class="cursor-pointer block    px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300">Lihat detail</button>
-                                </td>
-                                {{-- <td class="px-4 py-3 flex items-center justify-end">
+                                    <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                    <td class="px-4 py-3">{{ $letter->id }}</td>
+                                    <td class="px-4 py-3">{{ $letter->category }}</td>
+                                    <td class="px-4 py-3">{{ $letter->date_indo }}</td>
+                                    <td class="px-4 py-3">{{ $letter->status_text }}</td>
+                                    <td class="px-4 py-3">
+                                        @if ($letter->file_path)
+                                            {{ $letter->file_path }}
+                                        @else
+                                            <i>Sedang diproses</i>
+                                        @endif
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <button data-modal-target="mahasiswa-skma-modal-{{ $letter->id }}" data-modal-toggle="mahasiswa-skma-modal-{{ $letter->id }}" type="button"
+                                            class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
+                                            Lihat detail
+                                        </button>
+                                    </td>
+
+                                    @include('mahasiswa.skma.show')
+                                    {{-- <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="apple-imac-27-dropdown-button"
                                         data-dropdown-toggle="apple-imac-27-dropdown"
                                         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -189,66 +225,12 @@
                                         </div>
                                     </div>
                                 </td> --}}
-                            </tr>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
-                    aria-label="Table navigation">
-                    <span class="text-sm font-normal text-gray-500">
-                        Showing
-                        <span class="font-semibold text-gray-900">1-10</span>
-                        of
-                        <span class="font-semibold text-gray-900">1000</span>
-                    </span>
-                    <ul class="inline-flex items-stretch -space-x-px">
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-                                <span class="sr-only">Previous</span>
-                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                        </li>
-                        <li>
-                            <a href="#" aria-current="page"
-                                class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700">3</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">...</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">100</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-                                <span class="sr-only">Next</span>
-                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $letters->links() }}
             </div>
         </div>
     </section>
