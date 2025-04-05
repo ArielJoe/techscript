@@ -22,8 +22,8 @@
                 <div class="flex items-center justify-center h-24 rounded-sm bg-[#BCE7E9]">
 
                 </div>
-
             </div>
         </div>
+        <table></table>
     </div>
 @endsection

@@ -7,12 +7,14 @@ use App\Http\Middleware\CheckMO;
 use App\Http\Middleware\CheckMahasiswa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\DashboardMahasiswaController;
 use App\Http\Controllers\LetterSkmaMahasiswaController;
 use App\Http\Controllers\LetterSptmkMahasiswaController;
 use App\Http\Controllers\LetterLhsMahasiswaController;
 use App\Http\Controllers\LetterSklMahasiswaController;
 use App\Enums\RoleEnum;
+use App\Http\Controllers\AdminKaprodiController;
+use App\Http\Controllers\AdminMoController;
+use App\Http\Controllers\AdminMahasiswaController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -47,9 +49,15 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(CheckMahasiswa::class
     Route::resource('/skl', LetterSklMahasiswaController::class);
 });
 
-Route::get('/admin', function () {
-    return view('/admin/index');
-})->middleware(CheckAdmin::class);
+Route::prefix('admin')->name('admin.')->middleware(CheckAdmin::class)->group(function () {
+    Route::get('/', function () {
+        return view('/admin/index');
+    })->name('index');
+
+    Route::resource('/kaprodi', AdminKaprodiController::class);
+    Route::resource('/mo', AdminMoController::class);
+    Route::resource('/mahasiswa', AdminMahasiswaController::class);
+});
 
 Route::get('/mo', function () {
     return view('/mo/index');

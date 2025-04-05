@@ -55,10 +55,10 @@ class LetterSptmkMahasiswaController extends Controller
         $userId = Auth::id();
 
         $major = DB::table('User')
-        ->join('Major', 'User.Major_id', '=', 'Major.id')
-        ->where('User.id', $userId)
-        ->select('Major.id as major_id', 'Major.name as major_name')
-        ->first();
+            ->join('Major', 'User.Major_id', '=', 'Major.id')
+            ->where('User.id', $userId)
+            ->select('Major.id as major_id', 'Major.name as major_name')
+            ->first();
 
         $courses = DB::table('Enrollment')
             ->join('Course', 'Enrollment.Course_id', '=', 'Course.id')

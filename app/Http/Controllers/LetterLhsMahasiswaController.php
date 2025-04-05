@@ -69,7 +69,7 @@ class LetterLhsMahasiswaController extends Controller
             WHERE 
                 Student.user_id = ?
         ", [$userId]);
-        
+
         return view('/mahasiswa/lhs/create')->with('students', $students);
     }
 
@@ -140,7 +140,7 @@ class LetterLhsMahasiswaController extends Controller
     public function show(Letter $letter)
     {
         $letters = Letter::where('Student_id', 'STU' . Auth::id())
-                        ->where('category', 'LHS')->latest()->get();
+            ->where('category', 'LHS')->latest()->get();
         foreach ($letters as $letter) {
             $letter->date_indo = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
             $letter->status_text = match ($letter->status) {

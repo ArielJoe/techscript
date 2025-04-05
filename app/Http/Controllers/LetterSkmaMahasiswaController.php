@@ -96,7 +96,7 @@ class LetterSkmaMahasiswaController extends Controller
             }
             return $student;
         }, $students);
-        
+
         return view('/mahasiswa/skma/create')->with('students', $students);
     }
 
@@ -167,7 +167,7 @@ class LetterSkmaMahasiswaController extends Controller
     public function show(Request $request)
     {
         $letters = Letter::where('Student_id', 'STU' . Auth::id())
-                        ->where('category', 'SKMA')->latest()->get();
+            ->where('category', 'SKMA')->latest()->get();
         foreach ($letters as $letter) {
             $letter->date_indo = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
             $letter->status_text = match ($letter->status) {

@@ -10,8 +10,8 @@
         <div class="flex justify-between items-center">
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                 type="button"
-                class="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden hover:bg-teal-cyan focus:outline-none focus:ring-2 focus:ring-light-cyan cursor-pointer">
-                <span class="sr-only">Close sidebar</span>
+                class="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden hover:bg-teal-cyan focus:outline-none focus:ring-2 focus:ring-light-cyan">
+                <span class="sr-only">Toggle sidebar</span>
                 <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path clip-rule="evenodd" fill-rule="evenodd"
@@ -22,34 +22,67 @@
 
         <!-- Navigation Items -->
         @php
-            $navItems = [
-                [
+            $navItems = [];
+            $userRole = Auth::check() ? RoleEnum::from(Auth::user()->role)->label() : null;
+
+            if ($userRole) {
+                $navItems[] = [
                     'label' => 'Dashboard',
                     'icon' => 'ri-dashboard-fill',
-                    'route' => 'mahasiswa.index',
-                    'activeRoutes' => ['mahasiswa.index'],
-                ],
-            ];
-
-            // Only add Letter item if user is authenticated and has mahasiswa role
-            if (RoleEnum::from(Auth::user()->role)->label() === 'mahasiswa') {
-                $navItems[] = [
-                    'label' => 'Letter',
-                    'icon' => 'solar-letter-bold',
-                    'route' => null,
-                    'activeRoutes' => [
-                        'mahasiswa.skma.index',
-                        'mahasiswa.sptmk.index',
-                        'mahasiswa.skl.index',
-                        'mahasiswa.lhs.index',
-                    ],
-                    'children' => [
-                        ['label' => 'SKMA', 'route' => 'mahasiswa.skma.index'],
-                        ['label' => 'SPTMK', 'route' => 'mahasiswa.sptmk.index'],
-                        ['label' => 'SKL', 'route' => 'mahasiswa.skl.index'],
-                        ['label' => 'LHS', 'route' => 'mahasiswa.lhs.index'],
-                    ],
+                    'route' => "$userRole.index",
+                    'activeRoutes' => ["$userRole.index"],
                 ];
+
+                switch ($userRole) {
+                    case 'kaprodi':
+                    case 'mo':
+                        $navItems[] = [
+                            'label' => 'Submission',
+                            'icon' => 'solar-letter-bold',
+                            'route' => "$userRole.submission.index",
+                            'activeRoutes' => ["$userRole.submission.index"],
+                        ];
+                        break;
+                    case 'mahasiswa':
+                        $navItems[] = [
+                            'label' => 'Letter',
+                            'icon' => 'solar-letter-bold',
+                            'route' => null,
+                            'activeRoutes' => [
+                                'mahasiswa.skma.index',
+                                'mahasiswa.sptmk.index',
+                                'mahasiswa.skl.index',
+                                'mahasiswa.lhs.index',
+                            ],
+                            'children' => [
+                                ['label' => 'SKMA', 'route' => 'mahasiswa.skma.index'],
+                                ['label' => 'SPTMK', 'route' => 'mahasiswa.sptmk.index'],
+                                ['label' => 'SKL', 'route' => 'mahasiswa.skl.index'],
+                                ['label' => 'LHS', 'route' => 'mahasiswa.lhs.index'],
+                            ],
+                        ];
+                        break;
+                    case 'admin':
+                        $navItems[] = [
+                            'label' => 'User',
+                            'icon' => 'heroicon-s-user',
+                            'route' => null,
+                            'activeRoutes' => ['admin.kaprodi.index', 'admin.mo.index', 'admin.mahasiswa.index'],
+                            'children' => [
+                                ['label' => 'Kaprodi', 'route' => 'admin.kaprodi.index'],
+                                ['label' => 'MO', 'route' => 'admin.mo.index'],
+                                ['label' => 'Mahasiswa', 'route' => 'admin.mahasiswa.index'],
+                            ],
+                        ];
+                        break;
+                }
+
+                foreach ($navItems as $index => $item) {
+                    if (!empty($item['children'])) {
+                        $navItems[$index]['dropdownId'] =
+                            'dropdown-' . \Illuminate\Support\Str::slug($item['label']) . '-' . $index;
+                    }
+                }
             }
         @endphp
 
@@ -57,43 +90,44 @@
             @foreach ($navItems as $item)
                 @if (empty($item['children']))
                     <li>
-                        <a href="{{ $item['route'] ? route($item['route']) : '#' }}"
-                            class="flex items-center p-2 rounded-lg transition-colors duration-200 text-white cursor-pointer
-                                {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}">
+                        <a href="{{ Route::has($item['route']) ? route($item['route']) : '#' }}"
+                            class="flex items-center p-2 rounded-lg text-white hover:bg-teal-cyan transition-colors duration-200
+                                {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : '' }}">
                             @if ($item['icon'] === 'ri-dashboard-fill')
                                 <x-ri-dashboard-fill class="w-6 h-6 text-white" />
-                            @elseif ($item['icon'] === 'solar-letter-opened-bold')
-                                <x-solar-letter-opened-bold class="w-6 h-6 text-white" />
+                            @elseif ($item['icon'] === 'solar-letter-bold')
+                                <x-solar-letter-bold class="w-6 h-6 text-white" />
+                            @elseif ($item['icon'] === 'heroicon-s-user')
+                                <x-heroicon-s-user class="w-6 h-6 text-white" />
                             @endif
-                            <span class="ms-3 text-md">{{ $item['label'] }}</span>
+                            <span class="ml-3 text-md">{{ $item['label'] }}</span>
                         </a>
                     </li>
                 @else
                     <li>
                         <button type="button"
-                            class="flex items-center p-2 w-full rounded-lg transition-colors duration-200 text-white cursor-pointer
-                                    {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}"
-                            aria-controls="dropdown-{{ Str::slug($item['label']) }}"
-                            data-collapse-toggle="dropdown-{{ Str::slug($item['label']) }}">
+                            class="flex items-center p-2 mb-2 w-full rounded-lg text-white hover:bg-teal-cyan transition-colors duration-200
+                                {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : '' }}"
+                            aria-controls="{{ $item['dropdownId'] }}" data-collapse-toggle="{{ $item['dropdownId'] }}">
                             @if ($item['icon'] === 'solar-letter-bold')
                                 <x-solar-letter-bold class="w-6 h-6 text-white" />
+                            @elseif ($item['icon'] === 'heroicon-s-user')
+                                <x-heroicon-s-user class="w-6 h-6 text-white" />
                             @endif
                             <span class="flex-1 ml-3 text-left text-md whitespace-nowrap">{{ $item['label'] }}</span>
-                            <svg aria-hidden="true"
-                                class="w-6 h-6 text-white transition-transform duration-300 transform"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-chevron>
+                            <svg class="w-5 h-5 text-white transition-transform duration-300 chevron"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
                                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-{{ Str::slug($item['label']) }}" class="hidden py-2 space-y-2"
-                            data-collapsed-height="0" data-expanded-height="auto">
+                        <ul id="{{ $item['dropdownId'] }}" class="hidden mt-1 space-y-2 bg-deep-teal">
                             @foreach ($item['children'] as $child)
-                                <li>
-                                    <a href="{{ route($child['route']) }}"
-                                        class="flex items-center p-2 pl-11 w-full rounded-lg transition-colors duration-200 text-white cursor-pointer
-                                            {{ request()->routeIs($child['route']) ? 'bg-teal-cyan' : 'hover:bg-teal-cyan' }}">
+                                <li class="pl-7">
+                                    <a href="{{ Route::has($child['route']) ? route($child['route']) : '#' }}"
+                                        class="flex items-center py-2 px-4 rounded-lg text-white hover:bg-teal-cyan transition-colors duration-200
+                                            {{ request()->routeIs($child['route']) ? 'bg-teal-cyan' : '' }}">
                                         <span class="text-md">{{ $child['label'] }}</span>
                                     </a>
                                 </li>
@@ -106,43 +140,51 @@
     </div>
 </div>
 
-<!-- Keep your existing JavaScript -->
+<!-- JavaScript -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const navItems = @json($navItems);
+        // Dropdown toggle
         const dropdownButtons = document.querySelectorAll('[data-collapse-toggle]');
-
         dropdownButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
                 const dropdownId = this.getAttribute('data-collapse-toggle');
                 const dropdown = document.getElementById(dropdownId);
-                const chevron = this.querySelector('[data-chevron]');
+                const chevron = this.querySelector('.chevron'); // Target the chevron class
 
-                if (dropdown.classList.contains('hidden')) {
-                    dropdown.classList.remove('hidden');
-                    chevron.classList.add('rotate-180');
+                if (dropdown && chevron) {
+                    dropdown.classList.toggle('hidden');
+                    chevron.classList.toggle('rotate-180');
                 } else {
-                    dropdown.classList.add('hidden');
-                    chevron.classList.remove('rotate-180');
+                    console.error(`Dropdown with ID ${dropdownId} not found`);
                 }
             });
         });
 
+        // Open active dropdowns
         const activeRoute = '{{ request()->route()->getName() }}';
+        const navItems = @json($navItems);
         navItems.forEach(item => {
             if (item.children && item.activeRoutes.includes(activeRoute)) {
-                const dropdownId = 'dropdown-' + item.label.toLowerCase().replace(/\s+/g, '-');
+                const dropdownId = item.dropdownId;
                 const dropdown = document.getElementById(dropdownId);
                 const button = document.querySelector(`[data-collapse-toggle="${dropdownId}"]`);
-                const chevron = button ? button.querySelector('[data-chevron]') : null;
+                const chevron = button?.querySelector('.chevron'); // Target the chevron class
 
-                if (dropdown) {
+                if (dropdown && chevron) {
                     dropdown.classList.remove('hidden');
-                }
-                if (chevron) {
                     chevron.classList.add('rotate-180');
                 }
             }
         });
+
+        // Mobile sidebar toggle
+        const sidebarToggle = document.querySelector('[data-drawer-toggle="logo-sidebar"]');
+        const sidebar = document.getElementById('logo-sidebar');
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+        }
     });
 </script>

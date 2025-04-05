@@ -90,7 +90,7 @@
                 <div class="flex flex-col mt-4 md:mt-6">
                     <button type="button" data-modal-target="mahasiswa-skl-modal-{{ $letter->id }}" data-modal-toggle="mahasiswa-skl-modal-{{ $letter->id }}"
                         class="cursor-pointer inline-flex items-center px-4 py-2 my-1 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
-                        Detail pengajuan
+                        Detail Pengajuan
                     </button>
                     @include('mahasiswa.skl.show')
                     <a href="{{ $letter->file_path ? asset($letter->file_path) : '#' }}"

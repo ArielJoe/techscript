@@ -27,7 +27,7 @@
     </div>
 
 
-    <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
+    {{-- <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
         <div class="flex justify-end px-4 pt-4">
             <button id="dropdownButton" data-dropdown-toggle="dropdown"
                 class="inline-block text-gray-500 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm p-1.5"
@@ -68,5 +68,5 @@
                     class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Message</a>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
