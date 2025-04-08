@@ -15,6 +15,8 @@ use App\Enums\RoleEnum;
 use App\Http\Controllers\AdminKaprodiController;
 use App\Http\Controllers\AdminMoController;
 use App\Http\Controllers\AdminMahasiswaController;
+use App\Http\Controllers\KaprodiSubmissionController;
+use App\Http\Controllers\MOSubmissionController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -59,10 +61,20 @@ Route::prefix('admin')->name('admin.')->middleware(CheckAdmin::class)->group(fun
     Route::resource('/mahasiswa', AdminMahasiswaController::class);
 });
 
-Route::get('/mo', function () {
-    return view('/mo/index');
-})->middleware(CheckMO::class);
+Route::prefix('mo')->name('mo.')->middleware(CheckMO::class)->group(function () {
+    Route::get('/', function () {
+        return view('/mo/index');
+    })->name('index');
 
-Route::get('/kaprodi', function () {
-    return view('/kaprodi/index');
-})->middleware(CheckKaprodi::class);
+    Route::resource('/submission', MOSubmissionController::class);
+});
+
+Route::prefix('kaprodi')->name('kaprodi.')->middleware(CheckKaprodi::class)->group(function () {
+    Route::get('/', function () {
+        return view('/kaprodi/index');
+    })->name('index');
+
+    Route::resource('/submission', KaprodiSubmissionController::class)
+        ->parameters(['submission' => 'letter'])
+        ->where(['letter' => '.*']);
+});

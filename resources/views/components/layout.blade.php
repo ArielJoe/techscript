@@ -43,6 +43,14 @@
                 showConfirmButton: false,
                 timer: 2000
             });
+        @elseif (session('info'))
+            Swal.fire({
+                icon: "info",
+                title: "INFO",
+                text: "{{ session('info') }}",
+                showConfirmButton: false,
+                timer: 2000
+            })
         @elseif (session('error'))
             Swal.fire({
                 icon: "error",

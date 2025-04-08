@@ -24,6 +24,7 @@ class Letter extends Model
         'addressed_to',
         'list_description',
         'selected_course',
+        'accepted_by',
         'status',
         'file_path',
         'updated_at',

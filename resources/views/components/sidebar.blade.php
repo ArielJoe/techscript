@@ -9,88 +9,23 @@
         <!-- Sidebar Toggle Buttons -->
         <div class="flex justify-between items-center">
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
-                type="button"
+                type="button" aria-label="Toggle sidebar"
                 class="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden hover:bg-teal-cyan focus:outline-none focus:ring-2 focus:ring-light-cyan">
                 <span class="sr-only">Toggle sidebar</span>
                 <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
+                    <title>Close sidebar</title>
                     <path clip-rule="evenodd" fill-rule="evenodd"
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" />
                 </svg>
             </button>
         </div>
 
-        <!-- Navigation Items -->
-        @php
-            $navItems = [];
-            $userRole = Auth::check() ? RoleEnum::from(Auth::user()->role)->label() : null;
-
-            if ($userRole) {
-                $navItems[] = [
-                    'label' => 'Dashboard',
-                    'icon' => 'ri-dashboard-fill',
-                    'route' => "$userRole.index",
-                    'activeRoutes' => ["$userRole.index"],
-                ];
-
-                switch ($userRole) {
-                    case 'kaprodi':
-                    case 'mo':
-                        $navItems[] = [
-                            'label' => 'Submission',
-                            'icon' => 'solar-letter-bold',
-                            'route' => "$userRole.submission.index",
-                            'activeRoutes' => ["$userRole.submission.index"],
-                        ];
-                        break;
-                    case 'mahasiswa':
-                        $navItems[] = [
-                            'label' => 'Letter',
-                            'icon' => 'solar-letter-bold',
-                            'route' => null,
-                            'activeRoutes' => [
-                                'mahasiswa.skma.index',
-                                'mahasiswa.sptmk.index',
-                                'mahasiswa.skl.index',
-                                'mahasiswa.lhs.index',
-                            ],
-                            'children' => [
-                                ['label' => 'SKMA', 'route' => 'mahasiswa.skma.index'],
-                                ['label' => 'SPTMK', 'route' => 'mahasiswa.sptmk.index'],
-                                ['label' => 'SKL', 'route' => 'mahasiswa.skl.index'],
-                                ['label' => 'LHS', 'route' => 'mahasiswa.lhs.index'],
-                            ],
-                        ];
-                        break;
-                    case 'admin':
-                        $navItems[] = [
-                            'label' => 'User',
-                            'icon' => 'heroicon-s-user',
-                            'route' => null,
-                            'activeRoutes' => ['admin.kaprodi.index', 'admin.mo.index', 'admin.mahasiswa.index'],
-                            'children' => [
-                                ['label' => 'Kaprodi', 'route' => 'admin.kaprodi.index'],
-                                ['label' => 'MO', 'route' => 'admin.mo.index'],
-                                ['label' => 'Mahasiswa', 'route' => 'admin.mahasiswa.index'],
-                            ],
-                        ];
-                        break;
-                }
-
-                foreach ($navItems as $index => $item) {
-                    if (!empty($item['children'])) {
-                        $navItems[$index]['dropdownId'] =
-                            'dropdown-' . \Illuminate\Support\Str::slug($item['label']) . '-' . $index;
-                    }
-                }
-            }
-        @endphp
-
         <ul class="space-y-2 font-medium">
             @foreach ($navItems as $item)
                 @if (empty($item['children']))
                     <li>
-                        <a href="{{ Route::has($item['route']) ? route($item['route']) : '#' }}"
+                        <a href="{{ !is_null($item['route']) && Route::has($item['route']) ? route($item['route']) : '#' }}"
                             class="flex items-center p-2 rounded-lg text-white hover:bg-teal-cyan transition-colors duration-200
                                 {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : '' }}">
                             @if ($item['icon'] === 'ri-dashboard-fill')
@@ -108,7 +43,8 @@
                         <button type="button"
                             class="flex items-center p-2 mb-2 w-full rounded-lg text-white hover:bg-teal-cyan transition-colors duration-200
                                 {{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'bg-teal-cyan' : '' }}"
-                            aria-controls="{{ $item['dropdownId'] }}" data-collapse-toggle="{{ $item['dropdownId'] }}">
+                            aria-controls="{{ $item['dropdownId'] }}" data-collapse-toggle="{{ $item['dropdownId'] }}"
+                            aria-expanded="{{ in_array(request()->route()->getName(), $item['activeRoutes']) ? 'true' : 'false' }}">
                             @if ($item['icon'] === 'solar-letter-bold')
                                 <x-solar-letter-bold class="w-6 h-6 text-white" />
                             @elseif ($item['icon'] === 'heroicon-s-user')
@@ -125,7 +61,7 @@
                         <ul id="{{ $item['dropdownId'] }}" class="hidden mt-1 space-y-2 bg-deep-teal">
                             @foreach ($item['children'] as $child)
                                 <li class="pl-7">
-                                    <a href="{{ Route::has($child['route']) ? route($child['route']) : '#' }}"
+                                    <a href="{{ !is_null($child['route']) && Route::has($child['route']) ? route($child['route']) : '#' }}"
                                         class="flex items-center py-2 px-4 rounded-lg text-white hover:bg-teal-cyan transition-colors duration-200
                                             {{ request()->routeIs($child['route']) ? 'bg-teal-cyan' : '' }}">
                                         <span class="text-md">{{ $child['label'] }}</span>
