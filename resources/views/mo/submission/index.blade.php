@@ -171,6 +171,8 @@
                                     <th scope="col" class="px-4 py-3">Jenis Surat</th>
                                     <th scope="col" class="px-4 py-3">Tanggal diajukan</th>
                                     <th scope="col" class="px-4 py-3">Diajukan oleh</th>
+                                    <th scope="col" class="px-4 py-3">Disetujui oleh</th>
+                                    <th scope="col" class="px-4 py-3">Upload surat</th>
                                     <th scope="col" class="px-4 py-3">Action</th>
                                 </tr>
                             </thead>
@@ -184,35 +186,40 @@
                                         <td class="px-4 py-3">{{ $letter->category }}</td>
                                         <td class="px-4 py-3">{{ $letter->date_indo }}</td>
                                         <td class="px-4 py-3">{{ $letter->nrp }} {{ $letter->full_name }}</td>
+                                        <td class="px-4 py-3">{{ $letter->accepted_by }}</td>
                                         <td class="px-4 py-3">
                                             <div class="flex space-x-2">
-                                                <!-- Menambahkan Flexbox dan jarak antar tombol -->
-                                                <button data-modal-target="kaprodi-submission-modal-{{ $letter->id }}"
-                                                    data-modal-toggle="kaprodi-submission-modal-{{ $letter->id }}"
-                                                    type="button"
-                                                    class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
-                                                    Cek Pengajuan Surat
-                                                </button>
-                                                @include('kaprodi.submission.show')
-                                                <form action="{{ route('kaprodi.submission.update', $letter->id) }}"
-                                                    method="POST">
+                                                <form action="{{ route('mo.letter.submission', $letter->id) }}"
+                                                    method="POST" enctype="multipart/form-data">
                                                     @csrf
-                                                    @method('PUT')
-                                                    <button type="submit" name="approve" value="yes"
-                                                        class="bg-green-500 hover:bg-green-500/90 cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white rounded-lg">
-                                                        <x-phosphor-check class="w-4 h-4" />
-                                                    </button>
-                                                </form>
-                                                <form action="{{ route('kaprodi.submission.update', $letter->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit" name="approve" value="no"
-                                                        class="bg-red-500 hover:bg-red-500/90 cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white rounded-lg">
-                                                        <x-phosphor-x class="w-4 h-4" />
-                                                    </button>
+                                                    <div class="relative w-fit">
+                                                        <!-- Hidden file input -->
+                                                        <input type="file" name="letter_file"
+                                                            id="letter_{{ $letter->id }}" accept="application/pdf"
+                                                            class="hidden"
+                                                            onchange="document.getElementById('file-name-{{ $letter->id }}').textContent = this.files[0]?.name.substring(0, 15) + '...' + '.pdf' || '';
+                                                                         document.getElementById('submit-btn-{{ $letter->id }}').classList.remove('hidden');">
+                                                        <!-- Custom button -->
+                                                        <label for="letter_{{ $letter->id }}"
+                                                            class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-100 border border-blue-300 rounded-lg text-sm font-medium text-blue-700 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                            <x-phosphor-upload class="w-5 h-5 mr-2 text-blue-700" />
+                                                            Add file
+                                                        </label>
+                                                        <!-- Display selected file name -->
+                                                        <span id="file-name-{{ $letter->id }}"
+                                                            class="ml-3 text-sm text-gray-600"></span>
+
+                                                        <!-- Submit button (hidden until file selected) -->
+                                                        <button type="submit" id="submit-btn-{{ $letter->id }}"
+                                                            class="hidden ml-2 px-3 py-2 bg-green-100 border border-green-300 rounded-lg text-sm font-medium text-green-700 hover:bg-green-200">
+                                                            <x-phosphor-check class="w-5 h-5" />
+                                                        </button>
+                                                    </div>
                                                 </form>
                                             </div>
+                                        </td>
+                                        <td class="px-4 py-3">
+
                                         </td>
 
                                         {{-- @include('mahasiswa.skma.show') --}}

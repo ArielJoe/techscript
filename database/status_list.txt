@@ -7,7 +7,7 @@ Role :
 Letter :
 - 1 = Ditolak
 - 2 = Diproses
-- 3 = Diterima
+- 3 = Disetujui
 
 Student :
 - 1 = Aktif

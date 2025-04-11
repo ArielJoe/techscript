@@ -186,17 +186,29 @@
                                         <td class="px-4 py-3">{{ $letter->date_indo }}</td>
                                         <td class="px-4 py-3">{{ $letter->status_text }}</td>
                                         <td class="px-4 py-3">
-                                            @if ($letter->file_path)
-                                                {{ $letter->file_path }}
-                                            @else
+                                            @if ($letter->status === 3 && $letter->file_path)
+                                                <a href="{{ asset($letter->file_path) }}"
+                                                    class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-800"
+                                                    target="_blank">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                    </svg>
+                                                    Download LHS
+                                                </a>
+                                            @elseif ($letter->status === 3 && $letter->file_path === null)
                                                 <i>Sedang diproses</i>
+                                            @else
+                                                <p>-</p>
                                             @endif
                                         </td>
                                         <td class="px-4 py-3">
                                             <button data-modal-target="mahasiswa-lhs-modal-{{ $letter->id }}"
                                                 data-modal-toggle="mahasiswa-lhs-modal-{{ $letter->id }}"
                                                 type="button"
-                                                class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
+                                                class="cursor-pointer block px-4 py-1.5 text-base font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
                                                 Lihat Detail
                                             </button>
                                         </td>

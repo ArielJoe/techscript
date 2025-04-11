@@ -34,6 +34,8 @@
                                 <x-solar-letter-bold class="w-6 h-6 text-white" />
                             @elseif ($item['icon'] === 'heroicon-s-user')
                                 <x-heroicon-s-user class="w-6 h-6 text-white" />
+                            @elseif ($item['icon'] === 'ri-history-fill')
+                                <x-ri-history-fill class="w-6 h-6 text-white" />
                             @endif
                             <span class="ml-3 text-md">{{ $item['label'] }}</span>
                         </a>

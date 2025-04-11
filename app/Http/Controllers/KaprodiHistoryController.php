@@ -13,7 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Exception;
 use Carbon\Carbon;
 
-class KaprodiSubmissionController extends Controller
+class KaprodiHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,9 +28,11 @@ class KaprodiSubmissionController extends Controller
             ->select('Major.id as major_id')
             ->first();
 
-        $letters = Letter::where('Major_id', $major->major_id)
-            ->where('status', 2)
-            ->whereNull('accepted_by')
+        $letters = Letter::where(function ($query) use ($major) {
+            $query->where('Major_id', $major->major_id)
+                ->orWhereIn('status', [1, 3]);
+        })
+            ->whereNotNull('accepted_by')
             ->when($search, function ($query, $search) {
                 return $query->where('id', 'like', "%{$search}%");
             })
@@ -41,11 +43,6 @@ class KaprodiSubmissionController extends Controller
             ->select('student.*')
             ->first();
 
-        // $kaprodi = Kaprodi::join('letter', 'letter.Kaprodi_id' = 'kaprodi.id')
-        //     ->where('letter.Major_id', 'FTRC-001')
-        //     ->select('kaprodi.*')
-        //     ->first();
-
         foreach ($letters as $letter) {
             $letter->date_indo = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
             // Get student data
@@ -53,13 +50,13 @@ class KaprodiSubmissionController extends Controller
             $letter->nrp = $student->id;
             $letter->address = $student->address;
             $letter->status_text = match ($letter->status) {
-                1 => 'ditolak',
-                2 => 'diproses',
-                3 => 'disetujui'
+                1 => 'Ditolak',
+                2 => 'Diproses',
+                3 => 'Disetujui'
             };
         }
 
-        return view('kaprodi.submission.index')->with('letters', $letters);
+        return view('kaprodi.history.index')->with('letters', $letters);
     }
 
     /**
@@ -99,23 +96,7 @@ class KaprodiSubmissionController extends Controller
      */
     public function update(Request $request, Letter $letter)
     {
-        // Dapatkan nama kaprodi (bisa disesuaikan kalau tidak dari Auth)
-        $kaprodi = Kaprodi::where('User_id', Auth::id())->first();
-
-        if ($request->approve === 'yes') {
-            $letter->update([
-                'status' => 3,
-                'accepted_by' => $kaprodi->full_name,
-            ]);
-
-            return redirect()->route('kaprodi.submission.index')->with('success', 'Surat telah disetujui');
-        } else if ($request->approve === 'no') {
-            $letter->update([
-                'status' => 1
-            ]);
-
-            return redirect()->route('kaprodi.submission.index')->with('success', 'Surat telah ditolak');
-        }
+        //
     }
 
     /**

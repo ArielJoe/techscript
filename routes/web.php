@@ -1,10 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Middleware\CheckAdmin;
-use App\Http\Middleware\CheckKaprodi;
-use App\Http\Middleware\CheckMO;
-use App\Http\Middleware\CheckMahasiswa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LetterSkmaMahasiswaController;
@@ -16,6 +12,7 @@ use App\Http\Controllers\AdminKaprodiController;
 use App\Http\Controllers\AdminMoController;
 use App\Http\Controllers\AdminMahasiswaController;
 use App\Http\Controllers\KaprodiSubmissionController;
+use App\Http\Controllers\KaprodiHistoryController;
 use App\Http\Controllers\MOSubmissionController;
 
 Route::get('/', function () {
@@ -33,7 +30,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(CheckMahasiswa::class)->group(function () {
+Route::prefix('mahasiswa')->name('mahasiswa.')->middleware('mahasiswa')->group(function () {
     Route::get('/', function () {
         return view('/mahasiswa/index');
     })->name('index');
@@ -51,7 +48,7 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(CheckMahasiswa::class
     Route::resource('/skl', LetterSklMahasiswaController::class);
 });
 
-Route::prefix('admin')->name('admin.')->middleware(CheckAdmin::class)->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::get('/', function () {
         return view('/admin/index');
     })->name('index');
@@ -61,20 +58,28 @@ Route::prefix('admin')->name('admin.')->middleware(CheckAdmin::class)->group(fun
     Route::resource('/mahasiswa', AdminMahasiswaController::class);
 });
 
-Route::prefix('mo')->name('mo.')->middleware(CheckMO::class)->group(function () {
+Route::prefix('mo')->name('mo.')->middleware('mo')->group(function () {
     Route::get('/', function () {
         return view('/mo/index');
     })->name('index');
 
+    Route::post('/submission/{letter}', [MOSubmissionController::class, 'uploadFile'])
+        ->where(['letter' => '.*'])
+        ->name('letter.submission');
+
     Route::resource('/submission', MOSubmissionController::class);
 });
 
-Route::prefix('kaprodi')->name('kaprodi.')->middleware(CheckKaprodi::class)->group(function () {
+Route::prefix('kaprodi')->name('kaprodi.')->middleware('kaprodi')->group(function () {
     Route::get('/', function () {
         return view('/kaprodi/index');
     })->name('index');
 
     Route::resource('/submission', KaprodiSubmissionController::class)
         ->parameters(['submission' => 'letter'])
+        ->where(['letter' => '.*']);
+
+    Route::resource('/history', KaprodiHistoryController::class)
+        ->parameters(['history' => 'letter'])
         ->where(['letter' => '.*']);
 });

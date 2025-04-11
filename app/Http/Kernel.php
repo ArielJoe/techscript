@@ -39,9 +39,9 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'admin' => \App\Http\Middleware\CheckAdmin::class,
-        'student' => \App\Http\Middleware\CheckMahasiswa::class,
+        // 'auth' => \App\Http\Middleware\Authenticate::class,
+        // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        // 'admin' => \App\Http\Middleware\CheckAdmin::class,
+        // 'student' => \App\Http\Middleware\CheckMahasiswa::class,
     ];
 }

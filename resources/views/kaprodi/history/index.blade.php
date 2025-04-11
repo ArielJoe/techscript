@@ -1,27 +1,16 @@
 @extends('components.layout')
 
 @section('title')
-    Submission
+    History
 @endsection
 
 @section('content')
     <div class="lg:flex lg:items-center lg:justify-between mb-8 mx-3 md:mx-4 mt-2">
         <div class="min-w-0 flex-1">
             <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">
-                Submission
+                History
             </h2>
         </div>
-        {{-- <div class="mt-5 flex lg:mt-0 lg:ml-4">
-            <span class="sm:ml-3">
-                <a href="{{ route('mahasiswa.skma.create') }}">
-                    <button type="button"
-                        class="cursor-pointer inline-flex items-center rounded-md bg-teal-cyan px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-teal-cyan/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        <x-eva-plus class="w-5 h-5 mr-2" />
-                        Ajukan Surat
-                    </button>
-                </a>
-            </span>
-        </div> --}}
     </div>
 
     @if ($letters->isEmpty())
@@ -171,6 +160,7 @@
                                     <th scope="col" class="px-4 py-3">Jenis Surat</th>
                                     <th scope="col" class="px-4 py-3">Tanggal diajukan</th>
                                     <th scope="col" class="px-4 py-3">Diajukan oleh</th>
+                                    <th scope="col" class="px-4 py-3">Status</th>
                                     <th scope="col" class="px-4 py-3">Action</th>
                                 </tr>
                             </thead>
@@ -184,34 +174,17 @@
                                         <td class="px-4 py-3">{{ $letter->category }}</td>
                                         <td class="px-4 py-3">{{ $letter->date_indo }}</td>
                                         <td class="px-4 py-3">{{ $letter->nrp }} {{ $letter->full_name }}</td>
+                                        <td class="px-4 py-3">Telah {{ $letter->status_text }}</td>
                                         <td class="px-4 py-3">
                                             <div class="flex space-x-2">
                                                 <!-- Menambahkan Flexbox dan jarak antar tombol -->
-                                                <button data-modal-target="kaprodi-submission-modal-{{ $letter->id }}"
-                                                    data-modal-toggle="kaprodi-submission-modal-{{ $letter->id }}"
+                                                <button data-modal-target="kaprodi-history-modal-{{ $letter->id }}"
+                                                    data-modal-toggle="kaprodi-history-modal-{{ $letter->id }}"
                                                     type="button"
                                                     class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
-                                                    Cek Pengajuan Surat
+                                                    Riwayat Data Pengajuan
                                                 </button>
-                                                @include('kaprodi.submission.show')
-                                                <form action="{{ route('kaprodi.submission.update', $letter->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit" name="approve" value="yes"
-                                                        class="bg-green-500 hover:bg-green-500/90 cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white rounded-lg">
-                                                        <x-phosphor-check class="w-4 h-4" />
-                                                    </button>
-                                                </form>
-                                                <form action="{{ route('kaprodi.submission.update', $letter->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit" name="approve" value="no"
-                                                        class="bg-red-500 hover:bg-red-500/90 cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white rounded-lg">
-                                                        <x-phosphor-x class="w-4 h-4" />
-                                                    </button>
-                                                </form>
+                                                @include('kaprodi.history.show')
                                             </div>
                                         </td>
 

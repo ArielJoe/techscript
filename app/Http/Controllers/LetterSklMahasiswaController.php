@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Letter;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class LetterSklMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
-                3 => 'Diterima'
+                3 => 'Disetujui'
             };
             $letter->file_path = $letter->file_path;
             // Get student data
@@ -52,14 +53,14 @@ class LetterSklMahasiswaController extends Controller
     {
         $student = Student::where('User_id', Auth::id())->first() ?? null;
 
-        $letter = Letter::join('Major', 'Letter.Major_id', '=', 'Major.id')
-            ->where('Letter.Student_id', 'STU' . Auth::id())
-            ->select('Letter.Major_id', 'Major.name as major_name')
-            ->distinct()
+        $major = DB::table('User')
+            ->join('Major', 'User.Major_id', '=', 'Major.id')
+            ->where('User.id', Auth::id())
+            ->select('Major.name as major_name')
             ->first();
 
         if ($student) {
-            $student->major = $letter->major_name;
+            $student->major = $major->major_name;
             $student->status_text = match ($student->status) {
                 1 => 'Aktif',
                 2 => 'Cuti',
@@ -152,7 +153,7 @@ class LetterSklMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
-                3 => 'Diterima'
+                3 => 'Disetujui'
             };
         }
 

@@ -38,6 +38,12 @@ class SidebarComposer
                         'route' => "$userRole.submission.index",
                         'activeRoutes' => ["$userRole.submission.index"],
                     ];
+                    $navItems[] = [
+                        'label' => 'History',
+                        'icon' => 'ri-history-fill',
+                        'route' => "$userRole.history.index",
+                        'activeRoutes' => ["$userRole.history.index"],
+                    ];
                     break;
                 case 'mo':
                     $navItems[] = [
@@ -45,6 +51,12 @@ class SidebarComposer
                         'icon' => 'solar-letter-bold',
                         'route' => "$userRole.submission.index",
                         'activeRoutes' => ["$userRole.submission.index"],
+                    ];
+                    $navItems[] = [
+                        'label' => 'History',
+                        'icon' => 'ri-history-fill',
+                        'route' => "$userRole.history.index",
+                        'activeRoutes' => ["$userRole.history.index"],
                     ];
                     break;
                 case 'mahasiswa':
@@ -71,11 +83,11 @@ class SidebarComposer
                         'label' => 'User',
                         'icon' => 'heroicon-s-user',
                         'route' => null,
-                        'activeRoutes' => ['admin.kaprodi.index', 'admin.mo.index', 'admin.student.index'],
+                        'activeRoutes' => ['admin.kaprodi.index', 'admin.mo.index', 'admin.mahasiswa.index'],
                         'children' => [
                             ['label' => 'Kaprodi', 'route' => 'admin.kaprodi.index'],
                             ['label' => 'MO', 'route' => 'admin.mo.index'],
-                            ['label' => 'Mahasiswa', 'route' => 'admin.student.index'],
+                            ['label' => 'Mahasiswa', 'route' => 'admin.mahasiswa.index'],
                         ],
                     ];
                     break;

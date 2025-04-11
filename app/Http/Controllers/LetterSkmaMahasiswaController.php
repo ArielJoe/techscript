@@ -34,7 +34,7 @@ class LetterSkmaMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
-                3 => 'Diterima'
+                3 => 'Disetujui'
             };
             $letter->file_path = $letter->file_path;
             // Get student data
@@ -173,7 +173,7 @@ class LetterSkmaMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
-                3 => 'Diterima'
+                3 => 'Disetujui'
             };
         }
 
