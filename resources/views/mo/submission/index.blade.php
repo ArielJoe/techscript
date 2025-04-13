@@ -173,7 +173,6 @@
                                     <th scope="col" class="px-4 py-3">Diajukan oleh</th>
                                     <th scope="col" class="px-4 py-3">Disetujui oleh</th>
                                     <th scope="col" class="px-4 py-3">Upload surat</th>
-                                    <th scope="col" class="px-4 py-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Letter;
 use App\Models\Student;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
+use App\Notifications\LetterNotification;
 
 class MOSubmissionController extends Controller
 {
@@ -20,6 +22,7 @@ class MOSubmissionController extends Controller
         $letters = Letter::where('Major_id', 'FTRC-001')
             ->where('status', 3)
             ->whereNotNull('accepted_by')
+            ->whereNull('file_path')
             ->when($search, function ($query, $search) {
                 return $query->where('id', 'like', "%{$search}%");
             })
@@ -81,11 +84,6 @@ class MOSubmissionController extends Controller
 
         // Handle file upload if a file is present
         if ($request->hasFile('letter_file')) {
-            // Delete old file if exists
-            // if ($letter->file_path && Storage::disk('public')->exists($letter->file_path)) {
-            //     Storage::disk('public')->delete($letter->file_path);
-            // }
-
             // Get the file extension
             $extension = $request->file('letter_file')->getClientOriginalExtension();
 
@@ -98,14 +96,27 @@ class MOSubmissionController extends Controller
             $letter->file_path = $path;
         }
 
-        // Handle other updates to the letter
-        // ...
-
         $letter->save();
 
+        // Kirim notifikasi ke mahasiswa setelah file berhasil diunggah
+        $student = Student::where('id', $letter->Student_id)->first();
+
+        if ($student) {
+            $user = User::where('id', $student->User_id)
+                ->where('role', 1) // role mahasiswa
+                ->where('Major_id', $letter->Major_id)
+                ->first();
+
+            if ($user) {
+                $message = 'Surat Anda dengan nomor: ' . $letter->id . ' telah diunggah dan siap diunduh.';
+                $user->notify(new LetterNotification($message));
+            }
+        }
+
         return redirect()->route('mo.submission.index')
-            ->with('success', 'Letter updated successfully');
+            ->with('success', 'Surat berhasil diupload');
     }
+
 
     /**
      * Remove the specified resource from storage.

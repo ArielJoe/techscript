@@ -10,4 +10,13 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ["flowbite", "sweetalert2", "flatpickr"],
+                },
+            },
+        },
+    },
 });

@@ -188,7 +188,7 @@
                                         <td class="px-4 py-3">
                                             @if ($letter->status === 3 && $letter->file_path)
                                                 <a href="{{ asset($letter->file_path) }}"
-                                                    class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-800"
+                                                    class="inline-flex items-center px-4 py-2 bg-teal-cyan/90 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-cyan"
                                                     target="_blank">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -196,7 +196,7 @@
                                                             stroke-width="2"
                                                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                                     </svg>
-                                                    Download LHS
+                                                    Download SKMA
                                                 </a>
                                             @elseif ($letter->status === 3 && $letter->file_path === null)
                                                 <i>Sedang diproses</i>
@@ -205,13 +205,36 @@
                                             @endif
                                         </td>
                                         <td class="px-4 py-3">
-                                            <button data-modal-target="mahasiswa-skma-modal-{{ $letter->id }}"
-                                                data-modal-toggle="mahasiswa-skma-modal-{{ $letter->id }}"
-                                                type="button"
-                                                class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400"
-                                                target="_blank">
-                                                Lihat Detail
-                                            </button>
+                                            <div class="flex gap-2">
+                                                <button data-modal-target="mahasiswa-skma-modal-{{ $letter->id }}"
+                                                    data-modal-toggle="mahasiswa-skma-modal-{{ $letter->id }}"
+                                                    type="button"
+                                                    class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                                                    target="_blank">
+                                                    <x-eva-info class="w-5 h-5" />
+                                                </button>
+                                                <a href="{{ route('mahasiswa.skma.edit', $letter->id) }}">
+                                                    <button type="button"
+                                                        class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-600">
+                                                        <x-tabler-edit class="w-5 h-5" />
+                                                    </button>
+                                                </a>
+                                                @php
+                                                    $encodedId = base64_encode($letter->id);
+                                                @endphp
+
+                                                <form id="delete-form-{{ $encodedId }}"
+                                                    action="{{ route('mahasiswa.skma.destroy', ['skma' => urlencode($letter->id)]) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button"
+                                                        onclick="confirmDelete({{ json_encode($encodedId) }})"
+                                                        class="cursor-pointer px-2.5 py-1.5 text-xs font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                                        <x-css-trash class="w-5 h-5" />
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
 
                                         @include('mahasiswa.skma.show')

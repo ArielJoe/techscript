@@ -1,34 +1,23 @@
 @extends('components.layout')
 
 @section('title')
-    SPTMK
+    History
 @endsection
 
 @section('content')
     <div class="lg:flex lg:items-center lg:justify-between mb-8 mx-3 md:mx-4 mt-2">
         <div class="min-w-0 flex-1">
-            <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">Surat Pengantar
-                Tugas Mata Kuliah (SPTMK)</h2>
-        </div>
-        <div class="mt-5 flex lg:mt-0 lg:ml-4">
-            <span class="sm:ml-3">
-                <a href="{{ route('mahasiswa.sptmk.create') }}">
-                    <button type="button"
-                        class="cursor-pointer inline-flex items-center rounded-md bg-teal-cyan px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-teal-cyan/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        <x-eva-plus class="w-5 h-5 mr-2" />
-                        Ajukan Surat
-                        {{-- @include('mahasiswa.letter.skma') --}}
-                    </button>
-                </a>
-            </span>
+            <h2 class="text-2xl font-bold text-gray-900 sm:truncate sm:text-3xl sm:pb-1 sm:tracking-tight">
+                History
+            </h2>
         </div>
     </div>
 
     @if ($letters->isEmpty())
         <div class="flex items-center mx-3 md:mx-4.5 p-4 mb-4 text-sm text-deep-teal border border-teal-cyan/40 rounded-lg bg-light-cyan/20"
             role="alert">
-            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor" viewBox="0 0 20 20">
+            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                viewBox="0 0 20 20">
                 <path
                     d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
@@ -44,7 +33,7 @@
                     <div
                         class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                         <div class="w-full md:w-64">
-                            <form method="GET" action="{{ route('mahasiswa.sptmk.index') }}" class="flex items-center">
+                            <form method="GET" action="{{ route('mahasiswa.skma.index') }}" class="flex items-center">
                                 <label for="simple-search" class="sr-only">Search</label>
                                 <div class="relative w-full">
                                     <button type="submit"
@@ -60,7 +49,7 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
                                         placeholder="Cari nomor surat..">
                                     @if (request('search'))
-                                        <a href="{{ route('mahasiswa.sptmk.index') }}"
+                                        <a href="{{ route('mahasiswa.skma.index') }}"
                                             class="absolute inset-y-0 right-0 flex items-center pr-3">
                                             <svg class="w-6 h-6 text-gray-600 rotate-45" aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -170,8 +159,8 @@
                                     <th scope="col" class="px-4 py-3">Nomor Surat</th>
                                     <th scope="col" class="px-4 py-3">Jenis Surat</th>
                                     <th scope="col" class="px-4 py-3">Tanggal diajukan</th>
-                                    <th scope="col" class="px-4 py-3">Status</th>
-                                    <th scope="col" class="px-4 py-3">Berkas (download)</th>
+                                    <th scope="col" class="px-4 py-3">Diajukan oleh</th>
+                                    {{-- <th scope="col" class="px-4 py-3">Status</th> --}}
                                     <th scope="col" class="px-4 py-3">Action</th>
                                 </tr>
                             </thead>
@@ -184,61 +173,22 @@
                                         <td class="px-4 py-3">{{ $letter->id }}</td>
                                         <td class="px-4 py-3">{{ $letter->category }}</td>
                                         <td class="px-4 py-3">{{ $letter->date_indo }}</td>
-                                        <td class="px-4 py-3">{{ $letter->status_text }}</td>
+                                        <td class="px-4 py-3">{{ $letter->nrp }} {{ $letter->full_name }}</td>
+                                        {{-- <td class="px-4 py-3">{{ $letter->status_text }}</td> --}}
                                         <td class="px-4 py-3">
-                                            @if ($letter->status === 3 && $letter->file_path)
-                                                <a href="{{ asset($letter->file_path) }}"
-                                                    class="inline-flex items-center px-4 py-2 bg-teal-cyan/90 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-cyan"
-                                                    target="_blank">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                                    </svg>
-                                                    Download SPTMK
-                                                </a>
-                                            @elseif ($letter->status === 3 && $letter->file_path === null)
-                                                <i>Sedang diproses</i>
-                                            @else
-                                                <p>-</p>
-                                            @endif
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <div class="flex gap-2">
-
-                                                <button data-modal-target="mahasiswa-sptmk-modal-{{ $letter->id }}"
-                                                    data-modal-toggle="mahasiswa-sptmk-modal-{{ $letter->id }}"
+                                            <div class="flex space-x-2">
+                                                <!-- Menambahkan Flexbox dan jarak antar tombol -->
+                                                <button data-modal-target="mo-history-modal-{{ $letter->id }}"
+                                                    data-modal-toggle="mo-history-modal-{{ $letter->id }}"
                                                     type="button"
-                                                    class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-                                                    target="_blank">
-                                                    <x-eva-info class="w-5 h-5" />
+                                                    class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
+                                                    Riwayat Data Pengajuan
                                                 </button>
-                                                <a href="{{ route('mahasiswa.sptmk.edit', $letter->id) }}">
-                                                    <button type="button"
-                                                        class="cursor-pointer block px-2.5 py-1.5 text-xs font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-600">
-                                                        <x-tabler-edit class="w-5 h-5" />
-                                                    </button>
-                                                </a>
-                                                @php
-                                                    $encodedId = base64_encode($letter->id);
-                                                @endphp
-
-                                                <form id="delete-form-{{ $encodedId }}"
-                                                    action="{{ route('mahasiswa.sptmk.destroy', ['sptmk' => urlencode($letter->id)]) }}"
-                                                    method="POST" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button"
-                                                        onclick="confirmDelete({{ json_encode($encodedId) }})"
-                                                        class="cursor-pointer px-2.5 py-1.5 text-xs font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600">
-                                                        <x-css-trash class="w-5 h-5" />
-                                                    </button>
-                                                </form>
+                                                @include('mo.history.show')
                                             </div>
                                         </td>
 
-                                        @include('mahasiswa.sptmk.show')
+                                        {{-- @include('mahasiswa.skma.show') --}}
                                         {{-- <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="apple-imac-27-dropdown-button"
                                         data-dropdown-toggle="apple-imac-27-dropdown"

@@ -13,11 +13,14 @@
         "andreiio/blade-remix-icon": "^3.6",
         "blade-ui-kit/blade-heroicons": "^2.6",
         "blade-ui-kit/blade-icons": "^1.8",
+        "blade-ui-kit/blade-zondicons": "^1.6",
         "codeat3/blade-phosphor-icons": "^2.3",
         "codeat3/blade-solar-icons": "^1.2",
         "hasnayeen/blade-eva-icons": "^2.1",
+        "khatabwedaa/blade-css-icons": "*",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "secondnetwork/blade-tabler-icons": "^3.31"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

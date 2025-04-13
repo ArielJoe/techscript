@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Letter;
 use App\Models\Student;
+use App\Models\User;
+use App\Notifications\LetterNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -131,6 +133,17 @@ class LetterLhsMahasiswaController extends Controller
             'Student_id' => 'STU' . Auth::id(),
             'Major_id' => $majorId,
         ]);
+
+        // Send notification to Kaprodi
+        $kaprodi = User::where('role', 2)
+            ->where('Major_id', $majorId)
+            ->first();
+
+        if ($kaprodi) {
+            $message = 'Mahasiswa dengan ID: STU' . $userId . ' mengajukan permohonan LHS';
+            $kaprodi->notify(new LetterNotification($message));
+        }
+
         return redirect()->route('mahasiswa.lhs.index')->with(['success' => 'LHS telah diajukan!']);
     }
 
@@ -156,24 +169,67 @@ class LetterLhsMahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Letter $letter)
+    public function edit($id)
     {
-        //
+        $letter = Letter::findOrFail($id); // atau model kamu, sesuaikan jika namanya bukan Letter
+
+        $userId = Auth::id();
+        $students = DB::select("
+        SELECT 
+            Student.id AS student_id,
+            Student.full_name,
+            Course.period AS period,
+            Major.name AS program_studi
+        FROM 
+            Student
+        LEFT JOIN 
+            Enrollment ON Student.id = Enrollment.Student_id
+        LEFT JOIN 
+            Course ON Enrollment.Course_id = Course.id
+        LEFT JOIN 
+            Major ON Course.Major_id = Major.id
+        WHERE 
+            Student.user_id = ?
+    ", [$userId]);
+
+        return view('/mahasiswa/lhs/edit')->with('students', $students)
+        ->with('letter', $letter);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Letter $letter)
+    public function update(Request $request, $id)
     {
-        //
+        $letter = Letter::findOrFail($id);
+
+        $request->validate([
+            'purpose' => 'required|string|max:255',
+        ]);
+
+        // Update field yang diperbolehkan
+        $letter->purpose = $request->purpose;
+        $letter->save();
+
+        return redirect()->route('mahasiswa.lhs.index')
+            ->with('success', 'Pengajuan berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Letter $letter)
+    public function destroy($id)
     {
-        //
+        // Decode dulu karena mungkin berisi karakter seperti "/"
+        $decodedLetter = urldecode($id);
+
+        // Cari berdasarkan 'nomor_surat' atau field unik yang sesuai
+        $letter = Letter::where('id', $decodedLetter)->first();
+        
+        //delete transaksi
+        $letter->delete();
+
+        //redirect to index
+        return redirect()->route('mahasiswa.lhs.index')->with(['success' => 'Pengajuan berhasil dibatalkan']);
     }
 }

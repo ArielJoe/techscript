@@ -11,6 +11,8 @@
             <p class="text-gray-600">Hello, {{ Auth::user()->email }}!</p>
             <p class="text-gray-600">Your role is: {{ Auth::user()->role }}</p>
 
+            
+
             <!-- Example Cards -->
             <div class="grid grid-cols-3 gap-4 mb-4">
                 <div class="flex items-center justify-center h-24 rounded-sm bg-[#001011]">

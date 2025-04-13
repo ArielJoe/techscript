@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Letter;
 use App\Models\Student;
 use App\Models\Kaprodi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Exception;
 use Carbon\Carbon;
+use App\Notifications\LetterNotification;
 
 class KaprodiSubmissionController extends Controller
 {
@@ -107,6 +109,22 @@ class KaprodiSubmissionController extends Controller
                 'status' => 3,
                 'accepted_by' => $kaprodi->full_name,
             ]);
+
+            $majorId = $letter->Major_id;
+
+            // Ambil semua MO di jurusan terkait
+            $moUsers = User::where('role', 3)
+                ->where('Major_id', $majorId)
+                ->get();
+
+            if ($moUsers->isNotEmpty()) {
+                $message = 'Surat dengan nomor surat: ' . $letter->id . ' telah disetujui oleh Kaprodi';
+
+                foreach ($moUsers as $mo) {
+                    $mo->notify(new LetterNotification($message));
+                }
+            }
+
 
             return redirect()->route('kaprodi.submission.index')->with('success', 'Surat telah disetujui');
         } else if ($request->approve === 'no') {

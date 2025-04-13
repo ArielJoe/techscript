@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Letter;
 use App\Models\Student;
 use App\Models\User;
+use App\Notifications\LetterNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -157,30 +158,88 @@ class LetterSklMahasiswaController extends Controller
             };
         }
 
-        return view('/mahasiswa/skma/show')->with('letter', $letter);
+
+        // Send notification to Kaprodi
+        $user = DB::table('User')->where('id', Auth::id())->first();
+        $majorId = $user->Major_id;
+        $kaprodi = User::where('role', 2)
+            ->where('Major_id', $majorId)
+            ->first();
+
+        if ($kaprodi) {
+            $message = 'Mahasiswa dengan ID: STU' . Auth::id() . ' mengajukan permohonan SKL';
+            $kaprodi->notify(new LetterNotification($message));
+        }
+
+        return view('mahasiswa.skl.show')->with('letter', $letter);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Letter $letter)
+    public function edit($id)
     {
-        //
+        $student = Student::where('User_id', Auth::id())->first() ?? null;
+
+        $major = DB::table('User')
+            ->join('Major', 'User.Major_id', '=', 'Major.id')
+            ->where('User.id', Auth::id())
+            ->select('Major.name as major_name')
+            ->first();
+
+        if ($student) {
+            $student->major = $major->major_name;
+            $student->status_text = match ($student->status) {
+                1 => 'Aktif',
+                2 => 'Cuti',
+                3 => 'Mengundurkan Diri'
+            };
+        }
+
+        $letter = Letter::findOrFail($id);
+
+        return view('mahasiswa.skl.edit')->with('student', $student)
+            ->with('letter', $letter);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Letter $letter)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'graduation_date' => 'required|date',
+        ]);
+
+        $letter = Letter::findOrFail($id);
+
+        // Cari student dari letter
+        $student = Student::findOrFail($letter->Student_id);
+
+        // Update graduation_date di student
+        $student->graduation_date = $request->graduation_date;
+        $student->save();
+
+        return redirect()->route('mahasiswa.skl.index')
+            ->with('success', 'Pengajuan berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Letter $letter)
+    public function destroy($id)
     {
-        //
+        // Decode dulu karena mungkin berisi karakter seperti "/"
+        $decodedLetter = urldecode($id);
+
+        // Cari berdasarkan 'nomor_surat' atau field unik yang sesuai
+        $letter = Letter::where('id', $decodedLetter)->first();
+
+        //delete transaksi
+        $letter->delete();
+
+        //redirect to index
+        return redirect()->route('mahasiswa.skl.index')->with(['success' => 'Pengajuan berhasil dibatalkan']);
     }
 }

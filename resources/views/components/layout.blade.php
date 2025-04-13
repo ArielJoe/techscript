@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <link rel="icon" href="{{ asset('tslogo.png') }}">
+    <link rel="preload" href="{{ asset('tslogo.png') }}" as="image">
     {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
 
     <!-- Link untuk Flatpickr CSS -->
@@ -61,6 +61,31 @@
             });
         @endif
     </script>
+
+    <script>
+        function confirmDelete(encodedId) {
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data yang dihapus tidak bisa dikembalikan.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e3342f',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('delete-form-' + encodedId);
+                    if (form) {
+                        form.submit();
+                    } else {
+                        console.error("Form dengan ID tersebut tidak ditemukan:", encodedId);
+                    }
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>

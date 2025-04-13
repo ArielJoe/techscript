@@ -43,10 +43,10 @@
                 <p class="text-base leading-relaxed text-gray-500">
                     Status: {{ $letter->status_text }}
                 </p>
-                @if ($letter->status===3)
-                <p class="text-base leading-relaxed text-gray-500">
-                    Disetujui oleh: {{ $letter->accepted_by }}
-                </p>
+                @if ($letter->status === 3)
+                    <p class="text-base leading-relaxed text-gray-500">
+                        Disetujui oleh: {{ $letter->accepted_by }}
+                    </p>
                 @endif
                 <p class="text-base leading-relaxed text-gray-500">
                     Tanggal pengajuan: {{ $letter->date_indo }}
