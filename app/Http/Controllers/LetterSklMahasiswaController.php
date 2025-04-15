@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Letter;
 use App\Models\Student;
+<<<<<<< HEAD
 use App\Models\User;
 use App\Notifications\LetterNotification;
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +39,11 @@ class LetterSklMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
+<<<<<<< HEAD
                 3 => 'Disetujui'
+=======
+                3 => 'Diterima'
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
             };
             $letter->file_path = $letter->file_path;
             // Get student data
@@ -54,6 +61,7 @@ class LetterSklMahasiswaController extends Controller
     {
         $student = Student::where('User_id', Auth::id())->first() ?? null;
 
+<<<<<<< HEAD
         $major = DB::table('User')
             ->join('Major', 'User.Major_id', '=', 'Major.id')
             ->where('User.id', Auth::id())
@@ -62,6 +70,16 @@ class LetterSklMahasiswaController extends Controller
 
         if ($student) {
             $student->major = $major->major_name;
+=======
+        $letter = Letter::join('Major', 'Letter.Major_id', '=', 'Major.id')
+            ->where('Letter.Student_id', 'STU' . Auth::id())
+            ->select('Letter.Major_id', 'Major.name as major_name')
+            ->distinct()
+            ->first();
+
+        if ($student) {
+            $student->major = $letter->major_name;
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
             $student->status_text = match ($student->status) {
                 1 => 'Aktif',
                 2 => 'Cuti',
@@ -154,6 +172,7 @@ class LetterSklMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
+<<<<<<< HEAD
                 3 => 'Disetujui'
             };
         }
@@ -172,11 +191,19 @@ class LetterSklMahasiswaController extends Controller
         }
 
         return view('mahasiswa.skl.show')->with('letter', $letter);
+=======
+                3 => 'Diterima'
+            };
+        }
+
+        return view('/mahasiswa/skma/show')->with('letter', $letter);
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 
     /**
      * Show the form for editing the specified resource.
      */
+<<<<<<< HEAD
     public function edit($id)
     {
         $student = Student::where('User_id', Auth::id())->first() ?? null;
@@ -223,11 +250,25 @@ class LetterSklMahasiswaController extends Controller
 
         return redirect()->route('mahasiswa.skl.index')
             ->with('success', 'Pengajuan berhasil diupdate');
+=======
+    public function edit(Letter $letter)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Letter $letter)
+    {
+        //
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 
     /**
      * Remove the specified resource from storage.
      */
+<<<<<<< HEAD
     public function destroy($id)
     {
         // Decode dulu karena mungkin berisi karakter seperti "/"
@@ -241,5 +282,10 @@ class LetterSklMahasiswaController extends Controller
 
         //redirect to index
         return redirect()->route('mahasiswa.skl.index')->with(['success' => 'Pengajuan berhasil dibatalkan']);
+=======
+    public function destroy(Letter $letter)
+    {
+        //
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 }

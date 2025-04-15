@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Letter;
 use App\Models\Student;
+<<<<<<< HEAD
 use App\Models\User;
 use App\Notifications\LetterNotification;
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +40,11 @@ class LetterSptmkMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
+<<<<<<< HEAD
                 3 => 'Disetujui'
+=======
+                3 => 'Diterima'
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
             };
             $letter->file_path = $letter->file_path;
             // Get student data
@@ -57,10 +64,17 @@ class LetterSptmkMahasiswaController extends Controller
         $userId = Auth::id();
 
         $major = DB::table('User')
+<<<<<<< HEAD
             ->join('Major', 'User.Major_id', '=', 'Major.id')
             ->where('User.id', $userId)
             ->select('Major.id as major_id', 'Major.name as major_name')
             ->first();
+=======
+        ->join('Major', 'User.Major_id', '=', 'Major.id')
+        ->where('User.id', $userId)
+        ->select('Major.id as major_id', 'Major.name as major_name')
+        ->first();
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 
         $courses = DB::table('Enrollment')
             ->join('Course', 'Enrollment.Course_id', '=', 'Course.id')
@@ -138,6 +152,7 @@ class LetterSptmkMahasiswaController extends Controller
             'Student_id' => 'STU' . Auth::id(),
             'Major_id' => $majorId,
         ]);
+<<<<<<< HEAD
 
         // Send notification to Kaprodi
         $kaprodi = User::where('role', 2)
@@ -149,6 +164,8 @@ class LetterSptmkMahasiswaController extends Controller
             $kaprodi->notify(new LetterNotification($message));
         }
 
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
         return redirect()->route('mahasiswa.sptmk.index')->with(['success' => 'SPTMK telah diajukan!']);
     }
 
@@ -163,6 +180,7 @@ class LetterSptmkMahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+<<<<<<< HEAD
     public function edit($id)
     {
         $letter = Letter::findOrFail($id);
@@ -184,11 +202,17 @@ class LetterSptmkMahasiswaController extends Controller
 
         return view('/mahasiswa/sptmk/edit')->with('courses', $courses)->with('major', $major)
         ->with('letter', $letter);
+=======
+    public function edit(Letter $letter)
+    {
+        //
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 
     /**
      * Update the specified resource in storage.
      */
+<<<<<<< HEAD
     public function update(Request $request, $id)
     {
         $letter = Letter::findOrFail($id);
@@ -211,11 +235,17 @@ class LetterSptmkMahasiswaController extends Controller
 
         return redirect()->route('mahasiswa.sptmk.index')
             ->with('success', 'Pengajuan berhasil diupdate');
+=======
+    public function update(Request $request, Letter $letter)
+    {
+        //
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 
     /**
      * Remove the specified resource from storage.
      */
+<<<<<<< HEAD
     public function destroy($id)
     {
         // Decode dulu karena mungkin berisi karakter seperti "/"
@@ -229,5 +259,10 @@ class LetterSptmkMahasiswaController extends Controller
 
         //redirect to index
         return redirect()->route('mahasiswa.sptmk.index')->with(['success' => 'Pengajuan berhasil dibatalkan']);
+=======
+    public function destroy(Letter $letter)
+    {
+        //
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 }

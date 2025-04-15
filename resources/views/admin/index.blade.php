@@ -22,8 +22,14 @@
                 <div class="flex items-center justify-center h-24 rounded-sm bg-[#BCE7E9]">
 
                 </div>
+<<<<<<< HEAD
             </div>
         </div>
         <table></table>
+=======
+
+            </div>
+        </div>
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     </div>
 @endsection

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Letter;
 use App\Models\Student;
+<<<<<<< HEAD
 use App\Models\User;
 use App\Notifications\LetterNotification;
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +39,11 @@ class LetterSkmaMahasiswaController extends Controller
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
+<<<<<<< HEAD
                 3 => 'Disetujui'
+=======
+                3 => 'Diterima'
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
             };
             $letter->file_path = $letter->file_path;
             // Get student data
@@ -98,7 +105,11 @@ class LetterSkmaMahasiswaController extends Controller
             }
             return $student;
         }, $students);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
         return view('/mahasiswa/skma/create')->with('students', $students);
     }
 
@@ -160,6 +171,7 @@ class LetterSkmaMahasiswaController extends Controller
             'Student_id' => 'STU' . Auth::id(),
             'Major_id' => $majorId,
         ]);
+<<<<<<< HEAD
 
         // Send notification to Kaprodi
         $kaprodi = User::where('role', 2)
@@ -171,6 +183,8 @@ class LetterSkmaMahasiswaController extends Controller
             $kaprodi->notify(new LetterNotification($message));
         }
 
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
         return redirect()->route('mahasiswa.skma.index')->with(['success' => 'SKMA telah diajukan!']);
     }
 
@@ -180,13 +194,21 @@ class LetterSkmaMahasiswaController extends Controller
     public function show(Request $request)
     {
         $letters = Letter::where('Student_id', 'STU' . Auth::id())
+<<<<<<< HEAD
             ->where('category', 'SKMA')->latest()->get();
+=======
+                        ->where('category', 'SKMA')->latest()->get();
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
         foreach ($letters as $letter) {
             $letter->date_indo = Carbon::parse($letter->created_at)->locale('id')->translatedFormat('d F Y');
             $letter->status_text = match ($letter->status) {
                 1 => 'Ditolak',
                 2 => 'Diproses',
+<<<<<<< HEAD
                 3 => 'Disetujui'
+=======
+                3 => 'Diterima'
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
             };
         }
 
@@ -196,6 +218,7 @@ class LetterSkmaMahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+<<<<<<< HEAD
     public function edit($id)
     {
         $letter = Letter::findOrFail($id);
@@ -250,11 +273,17 @@ class LetterSkmaMahasiswaController extends Controller
 
         return view('mahasiswa.skma.edit')->with('letter', $letter)
             ->with('students', $students);
+=======
+    public function edit(Letter $letter)
+    {
+        // Not used
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 
     /**
      * Update the specified resource in storage.
      */
+<<<<<<< HEAD
     public function update(Request $request, $id)
     {
         $letter = Letter::findOrFail($id);
@@ -269,11 +298,17 @@ class LetterSkmaMahasiswaController extends Controller
 
         return redirect()->route('mahasiswa.skma.index')
             ->with('success', 'Pengajuan berhasil diupdate');
+=======
+    public function update(Request $request, Letter $letter)
+    {
+        // Not used
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 
     /**
      * Remove the specified resource from storage.
      */
+<<<<<<< HEAD
     public function destroy($id)
     {
         // Decode dulu karena mungkin berisi karakter seperti "/"
@@ -287,5 +322,10 @@ class LetterSkmaMahasiswaController extends Controller
 
         //redirect to index
         return redirect()->route('mahasiswa.skma.index')->with(['success' => 'Pengajuan berhasil dibatalkan']);
+=======
+    public function destroy(Letter $letter)
+    {
+        // Not used
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     }
 }

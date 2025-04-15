@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
+<<<<<<< HEAD
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
@@ -17,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'mo' => \App\Http\Middleware\CheckMO::class,
             'mahasiswa' => \App\Http\Middleware\CheckMahasiswa::class,
         ]);
+=======
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        //
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

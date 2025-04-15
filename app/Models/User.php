@@ -3,12 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+<<<<<<< HEAD
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use Notifiable;
     
+=======
+
+class User extends Authenticatable
+{
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     protected $table = 'user';
 
     protected $primaryKey = 'id';

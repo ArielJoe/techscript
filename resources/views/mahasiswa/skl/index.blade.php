@@ -42,8 +42,12 @@
                     <a href="{{ route('mahasiswa.skl.create') }}">
                         <button type="button"
                             class="cursor-pointer inline-flex items-center rounded-md bg-teal-cyan px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-teal-cyan/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+<<<<<<< HEAD
                             {{-- <x-eva-plus class="w-5 h-5 mr-2" /> --}}
                             <i class="bi bi-plus w-5 h-5 mr-2"></i>
+=======
+                            <x-eva-plus class="w-5 h-5 mr-2" />
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                             Ajukan Surat
                             {{-- @include('mahasiswa.letter.skma') --}}
                         </button>
@@ -55,10 +59,17 @@
 
     @if ($letter)
         <div class="w-full max-w-sm mx-4 md:mx-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+<<<<<<< HEAD
             <div class="flex justify-end px-4 pt-4">
                 <!-- Trigger button -->
                 <button id="dropdownButton-{{ $letter->id }}" data-dropdown-toggle="dropdownMenu-{{ $letter->id }}"
                     class="cursor-pointer inline-block text-gray-500 rounded-lg text-sm p-1.5" type="button">
+=======
+            {{-- <div class="flex justify-end px-4 pt-4">
+                <button id="dropdownButton" data-dropdown-toggle="dropdown"
+                    class="inline-block text-gray-500 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm p-1.5"
+                    type="button">
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                     <span class="sr-only">Open dropdown</span>
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 16 3">
@@ -66,6 +77,7 @@
                             d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                     </svg>
                 </button>
+<<<<<<< HEAD
 
                 <!-- Dropdown menu -->
                 <div id="dropdownMenu-{{ $letter->id }}"
@@ -105,10 +117,32 @@
             <div class="flex flex-col items-center py-10">
                 <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
                     src="https://i.pinimg.com/1200x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg" alt="" />
+=======
+                <!-- Dropdown menu -->
+                <div id="dropdown"
+                    class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
+                    <ul class="py-2" aria-labelledby="dropdownButton">
+                        <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Export
+                                Data</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete</a>
+                        </li>
+                    </ul>
+                </div>
+            </div> --}}
+            <div class="flex flex-col items-center py-10">
+                <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ asset('orang.jpg') }}" alt="Bonnie image" />
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                 <h5 class="mb-1 text-xl font-medium text-gray-900">{{ $letter->full_name }}</h5>
                 <span class="text-sm text-gray-500">{{ $letter->nrp }}</span>
                 <span class="text-sm text-gray-500">{{ $letter->major_name }}</span>
                 <div class="flex flex-col mt-4 md:mt-6">
+<<<<<<< HEAD
                     <button type="button" data-modal-target="mahasiswa-skl-modal-{{ $letter->id }}"
                         data-modal-toggle="mahasiswa-skl-modal-{{ $letter->id }}"
                         class="cursor-pointer inline-flex items-center px-4 py-2 my-1 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
@@ -119,10 +153,21 @@
                         class="px-4 py-2 my-1 mt-2 text-center text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-300 
                         {{ $letter->file_path ? 'hover:bg-gray-100 hover:text-blue-700' : 'pointer-events-none opacity-30' }}"
                         target="_blank">
+=======
+                    <button type="button" data-modal-target="mahasiswa-skl-modal-{{ $letter->id }}" data-modal-toggle="mahasiswa-skl-modal-{{ $letter->id }}"
+                        class="cursor-pointer inline-flex items-center px-4 py-2 my-1 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-400">
+                        Detail pengajuan
+                    </button>
+                    @include('mahasiswa.skl.show')
+                    <a href="{{ $letter->file_path ? asset($letter->file_path) : '#' }}"
+                        class="px-4 py-2 my-1 mt-2 text-center text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-300 
+                        {{ $letter->file_path ? 'hover:bg-gray-100 hover:text-blue-700' : 'pointer-events-none opacity-30' }}">
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                         Download SKL
                     </a>
                 </div>
             </div>
+<<<<<<< HEAD
         @else
             <div class="flex items-center mx-3 md:mx-4 p-4 mb-4 text-sm text-deep-teal border border-teal-cyan/40 rounded-lg bg-light-cyan/20"
                 role="alert">
@@ -136,5 +181,21 @@
                     <span class="font-medium">Data tidak tersedia!</span>
                 </div>
             </div>
+=======
+        </div>
+    @else
+        <div class="flex items-center mx-3 md:mx-4 p-4 mb-4 text-sm text-deep-teal border border-teal-cyan/40 rounded-lg bg-light-cyan/20"
+            role="alert">
+            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+                <span class="font-medium">Data tidak tersedia!</span>
+            </div>
+        </div>
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     @endif
 @endsection

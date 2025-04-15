@@ -24,7 +24,10 @@ class Letter extends Model
         'addressed_to',
         'list_description',
         'selected_course',
+<<<<<<< HEAD
         'accepted_by',
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
         'status',
         'file_path',
         'updated_at',

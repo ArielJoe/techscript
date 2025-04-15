@@ -50,6 +50,7 @@
                     </div>
                 </div>
                 <div class="flex">
+<<<<<<< HEAD
                     <button type="submit"
                         class="cursor-pointer inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 mr-1 text-sm font-medium text-center text-white bg-teal-cyan rounded-lg hover:bg-teal-cyan/90">
                         Ajukan Surat
@@ -59,9 +60,22 @@
                         class="cursor-pointer inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 ml-1 text-sm font-medium text-center border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-100">
                         Batalkan
                     </a>
+=======
+                    <button type="submit" class="cursor-pointer inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 mr-1 text-sm font-medium text-center text-white bg-teal-cyan rounded-lg hover:bg-teal-cyan/90">
+                        Ajukan Surat
+                    </button>
+                    {{-- <a href="{{ route('mahasiswa.skma.index') }}"> --}}
+                        <a href="{{ route('mahasiswa.lhs.index') }}" class="cursor-pointer inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 ml-1 text-sm font-medium text-center border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-100">
+                            Batalkan
+                        </a>
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                     {{-- </a> --}}
                 </div>
             </form>
         </div>
     </section>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699

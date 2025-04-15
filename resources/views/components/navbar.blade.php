@@ -2,7 +2,10 @@
     <nav class="w-full bg-white border-b border-gray-200">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
+<<<<<<< HEAD
                 <!-- Left Section: Sidebar Toggle and Logo -->
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                 <div class="flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
                         aria-controls="logo-sidebar" type="button"
@@ -15,6 +18,7 @@
                             </path>
                         </svg>
                     </button>
+<<<<<<< HEAD
                     <a href="/" class="flex ms-2 md:me-24">
                         <!-- Uncommented and added a placeholder logo; replace with your logo -->
                         <img src="{{ asset('tslogo.png') }}" class="h-8 me-3" alt="TechScript Logo" />
@@ -110,6 +114,14 @@
                         </div>
                     @endforeach --}}
                     <!-- User Dropdown -->
+=======
+                    <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+                        {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" /> --}}
+                        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">TechScript</span>
+                    </a>
+                </div>
+                <div class="flex items-center">
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                     <div class="flex items-center ms-3">
                         <div>
                             <button type="button"
@@ -118,6 +130,7 @@
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
                                     src="https://i.pinimg.com/1200x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"
+<<<<<<< HEAD
                                     alt="user photo" />
                             </button>
                         </div>
@@ -130,10 +143,21 @@
                                     @else
                                         Guest
                                     @endauth
+=======
+                                    alt="user photo">
+                            </button>
+                        </div>
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm"
+                            id="dropdown-user">
+                            <div class="px-4 py-3" role="none">
+                                <p class="text-sm font-medium text-gray-900 truncate" role="none">
+                                    {{ Auth::user()->email }}
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
+<<<<<<< HEAD
                                     @auth
                                         <form method="POST" action="{{ route('logout') }}"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
@@ -146,6 +170,13 @@
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                             role="menuitem">Sign in</a>
                                     @endauth
+=======
+                                    <form method="POST" action="{{ route('logout') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                        @csrf
+                                        <button type="submit">Sign out</button>
+                                    </form>
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
                                 </li>
                             </ul>
                         </div>
@@ -154,7 +185,15 @@
             </div>
         </div>
     </nav>
+<<<<<<< HEAD
 </div>
 
 <!-- Flowbite Script (Updated to a newer version) -->
 <script src="https://unpkg.com/flowbite@1.8.1/dist/flowbite.min.js"></script>
+=======
+
+</div>
+
+<!-- Flowbite Scripts -->
+<script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699

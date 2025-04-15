@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -64,3 +65,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# TechScript
+TechScript adalah sistem pengelolaan surat-menyurat berbasis web.</br>
+Aplikasi ini dirancang untuk mempermudah administrasi surat dan melacak status surat.
+
+## Features
+Coming soon...
+
+## Contributors
+- [Ariel Jonathan](https://github.com/ArielJoe)
+- [Eben Praus Yosia](https://github.com/bennpy20)
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699

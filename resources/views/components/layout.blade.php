@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
+<<<<<<< HEAD
     <link rel="preload" href="{{ asset('tslogo.png') }}" as="image">
     {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+=======
+    <link rel="icon" href="{{ asset('tslogo.png') }}">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
+
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     <!-- Link untuk Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -43,6 +49,7 @@
                 showConfirmButton: false,
                 timer: 2000
             });
+<<<<<<< HEAD
         @elseif (session('info'))
             Swal.fire({
                 icon: "info",
@@ -51,6 +58,8 @@
                 showConfirmButton: false,
                 timer: 2000
             })
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
         @elseif (session('error'))
             Swal.fire({
                 icon: "error",
@@ -61,6 +70,7 @@
             });
         @endif
     </script>
+<<<<<<< HEAD
 
     <script>
         function confirmDelete(encodedId) {
@@ -86,6 +96,8 @@
         }
     </script>
 
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 </body>
 
 </html>

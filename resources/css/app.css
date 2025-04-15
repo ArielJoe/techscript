@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
+<<<<<<< HEAD
 /* @tailwind base;
 @tailwind components; */
 @tailwind utilities;
 
+=======
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source "../**/*.blade.php";

@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 use App\Http\Controllers\AdminKaprodiController;
 use App\Http\Controllers\AdminMahasiswaController;
 use App\Http\Controllers\AdminMoController;
@@ -16,18 +17,50 @@ use App\Http\Controllers\MOSubmissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
+=======
+use App\Http\Controllers\AuthController;
+use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckKaprodi;
+use App\Http\Middleware\CheckMO;
+use App\Http\Middleware\CheckMahasiswa;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DashboardMahasiswaController;
+use App\Http\Controllers\LetterSkmaMahasiswaController;
+use App\Http\Controllers\LetterSptmkMahasiswaController;
+use App\Http\Controllers\LetterLhsMahasiswaController;
+use App\Http\Controllers\LetterSklMahasiswaController;
+use App\Enums\RoleEnum;
+
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect(RoleEnum::from(Auth::user()->role)->label());
+    }
+    return view('/auth/login');
+});
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
 
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login']);
 
+<<<<<<< HEAD
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('mahasiswa')->name('mahasiswa.')->middleware('mahasiswa')->group(function () {
+=======
+// Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register')->middleware('guest');
+// Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::prefix('mahasiswa')->name('mahasiswa.')->middleware(CheckMahasiswa::class)->group(function () {
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
     Route::get('/', function () {
         return view('/mahasiswa/index');
     })->name('index');
 
     // Route for Controller SKMA Mahasiswa
+<<<<<<< HEAD
     // Route untuk edit SKMA
     Route::get('/skma/{letter}/edit', [LetterSkmaMahasiswaController::class, 'edit'])
         ->name('skma.edit')
@@ -163,3 +196,28 @@ Route::prefix('kaprodi')->name('kaprodi.')->middleware('kaprodi')->group(functio
 });
 
 // Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->middleware('auth')->name('send.notification');
+=======
+    Route::resource('/skma', LetterSkmaMahasiswaController::class);
+
+    // Route for Controller SPTMK Mahasiswa
+    Route::resource('/sptmk', LetterSptmkMahasiswaController::class);
+
+    // Route for Controller LHS Mahasiswa
+    Route::resource('/lhs', LetterLhsMahasiswaController::class);
+
+    // Route for Controller SKMA Mahasiswa
+    Route::resource('/skl', LetterSklMahasiswaController::class);
+});
+
+Route::get('/admin', function () {
+    return view('/admin/index');
+})->middleware(CheckAdmin::class);
+
+Route::get('/mo', function () {
+    return view('/mo/index');
+})->middleware(CheckMO::class);
+
+Route::get('/kaprodi', function () {
+    return view('/kaprodi/index');
+})->middleware(CheckKaprodi::class);
+>>>>>>> e8489abcd84da377b1d0da4713bff0d153315699
